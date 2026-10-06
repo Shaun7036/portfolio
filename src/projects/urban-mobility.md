@@ -3,6 +3,7 @@ layout: layouts/project.njk
 tags: projects
 title: Patterns in urban mobility
 description: An exploration concept that turns trip records into a readable picture of how a city moves.
+highlight: "Peak travel windows, mapped"
 category: Data exploration
 tools:
   - Python

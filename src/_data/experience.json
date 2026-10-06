@@ -1,0 +1,18 @@
+[
+  {
+    "organization": "Your most recent organization",
+    "role": "Your analytics role",
+    "period": "20XX — Present",
+    "summary": "Describe the problem space, the people you supported, and the kind of analytical work you owned.",
+    "highlight": "Add one verified result, deliverable, or measure of scale.",
+    "example": true
+  },
+  {
+    "organization": "Another organization or client",
+    "role": "Another relevant role",
+    "period": "20XX — 20XX",
+    "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
+    "highlight": "Name the decision, workflow, or audience the work helped.",
+    "example": true
+  }
+]

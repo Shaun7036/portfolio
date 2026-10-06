@@ -4,15 +4,26 @@ The portfolio should read like a concise analyst's notebook: a clear introductio
 
 ## Presentation
 
-- Keep the background light, the typography readable, and the accent color restrained.
-- Use whitespace and fine rules to separate information. Reserve charts and color for content that benefits from them.
+- Keep the background warm white, the typography sans-serif and readable, and the accent colors sparse.
+- Use whitespace, fine rules, numbered labels, and monospaced metadata to create an editorial data feel without making the site resemble a dashboard.
 - Give each project a clear title, question or summary, tools, and a link to a full case study.
 - Make résumé, credentials, background, and contact reachable without burying project work.
 - Preserve a comfortable mobile reading order and visible keyboard focus states.
 
-The user's primary presentation reference is [Eugene Lee's portfolio](https://eugeneyjlee.github.io/portfolio/), with [8jun](https://8jun.github.io/) as a reference for restraint. These two sites were inaccessible during the initial build, so their visual treatment has not been verified. The accessible [Dominik Haitz portfolio](https://dhaitz.github.io/) and [Siddharth site](https://www.siddharth.info/) informed the emphasis on project summaries and deeper explanations. No reference-site assets or personal content are reused.
+The primary presentation reference is [Eugene Lee's portfolio](https://eugeneyjlee.github.io/portfolio/). Its useful ideas are the asymmetric split introduction, immediate 2×2 profile facts, lowercase section titles, quiet monospaced metadata, generous spacing, and visual project cards. This site translates Eugene's playful line drawings into original analytic glyphs and inline charts; it does not reuse reference-site code, imagery, or personal content.
 
-This first direction uses warm off-white, muted blue, fine rules, system sans-serif text, and Georgia display headings. Lightweight SVG illustrations suggest an analytical notebook. Replace illustrative charts with your actual work as projects are added.
+[Dominik Haitz's portfolio](https://dhaitz.github.io/) informs the direct project summaries and visible calls to action. [Siddharth Dayama's site](https://www.siddharth.info/) reinforces the value of showing real deliverables and employer context, while its visual density is deliberately avoided. [8jun](https://8jun.github.io/) is used only as a reminder to keep the site concise.
+
+The resulting direction uses warm off-white, near-black type, a system sans-serif stack, monospaced labels, restrained teal/blue/violet accents, and original lightweight SVG charts. Project visuals are softened behind outcome-led copy, then shown clearly on the case-study page. Replace illustrative charts with actual work as projects are added.
+
+## Home-page hierarchy
+
+1. Split introduction: identity and quick links at left; value proposition, profile facts, and a small data illustration at right.
+2. Three selected case studies with visible category, tools, summary, and a link to the full project page.
+3. A compact employer-facing experience snapshot with role, scope, and a proof point.
+4. A four-step working approach and a direct path to credentials.
+5. Recent writing for project expansions and analytical notes.
+6. A compact contact invitation and a large, simple footer.
 
 ## Page roles
 

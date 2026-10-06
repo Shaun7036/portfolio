@@ -1,14 +1,31 @@
 {
   "name": "Your Name",
-  "initials": "YN",
   "role": "Data & Analytics",
   "description": "An analytics portfolio featuring selected projects, practical data stories, credentials, and professional experience.",
-  "intro": "I turn complex data into clear answers. Explore a selection of projects, the questions behind them, and the decisions they can inform.",
+  "intro": "I turn raw data into clear decisions, useful tools, and stories people can act on.",
   "location": "Your location",
   "availability": "Open to opportunities",
+  "facts": [
+    {
+      "number": "01",
+      "label": "focus",
+      "value": "Business intelligence · Product analytics · Data storytelling"
+    },
+    {
+      "number": "02",
+      "label": "toolkit",
+      "value": "SQL · Python · Tableau / Power BI · Excel"
+    },
+    {
+      "number": "03",
+      "label": "approach",
+      "value": "Ask · Validate · Analyze · Explain"
+    }
+  ],
   "email": "",
   "github": "",
   "linkedin": "",
   "resumePdf": "",
+  "resumeTemplate": true,
   "url": ""
 }

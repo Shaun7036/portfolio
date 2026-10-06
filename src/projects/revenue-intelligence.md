@@ -3,6 +3,7 @@ layout: layouts/project.njk
 tags: projects
 title: Revenue intelligence
 description: A reporting concept that connects revenue trends to the questions a business needs to answer.
+highlight: "Dashboard-ready KPI model"
 category: Business intelligence
 tools:
   - SQL

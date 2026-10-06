@@ -3,6 +3,7 @@ layout: layouts/project.njk
 tags: projects
 title: Understanding retention
 description: A cohort analysis concept for understanding when customers return and where engagement changes.
+highlight: "Cohort drop-off, made visible"
 category: Product analytics
 tools:
   - Python

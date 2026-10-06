@@ -17,7 +17,7 @@ permalink: /resume/
 
   <article class="resume-preview" aria-label="Résumé template">
     <header class="resume-header">
-      <p class="section-label">Résumé template</p>
+      <p class="section-label">{% if site.resumeTemplate %}Résumé template{% else %}Résumé{% endif %}</p>
       <h2>{{ site.name }}</h2>
       <p>{{ site.role }} <span aria-hidden="true">/</span> {{ site.location }}</p>
       {% if site.email %}<a href="mailto:{{ site.email }}">{{ site.email }}</a>{% endif %}
@@ -51,6 +51,6 @@ permalink: /resume/
         <p><strong>Analysis:</strong> Your analytical methods.<br><strong>Tools:</strong> Your languages, databases, and visualization tools.<br><strong>Communication:</strong> Your reporting and collaboration skills.</p>
       </section>
     </div>
-    <p class="example-notice">This is a résumé template. Replace the placeholder text with your own experience before sharing.</p>
+    {% if site.resumeTemplate %}<p class="example-notice">This is a résumé template. Replace the placeholder text with your own experience before sharing.</p>{% endif %}
   </article>
 </div>

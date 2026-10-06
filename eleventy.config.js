@@ -43,6 +43,7 @@ export default function (eleventyConfig) {
     return Math.max(1, Math.ceil((text.match(/\S+/g)?.length || 0) / 220));
   });
   eleventyConfig.addFilter("limit", (items, count) => (items || []).slice(0, count));
+  eleventyConfig.addFilter("hasExamples", (items) => (items || []).some((item) => item?.data?.example === true || item?.example === true));
   eleventyConfig.addFilter("pad", (value, width = 2) => String(value).padStart(width, "0"));
 
   eleventyConfig.addCollection("projects", (collection) =>

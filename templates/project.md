@@ -3,6 +3,7 @@ layout: layouts/project.njk
 tags: projects
 title: Your project title
 description: The question you investigated and why it matters, in one sentence.
+highlight: "A short, verified result or proof point"
 category: Business intelligence
 tools:
   - SQL
