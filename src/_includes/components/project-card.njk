@@ -1,0 +1,11 @@
+{% from 'components/visual.njk' import visual %}
+<article class="project-card{% if featuredCard %} project-card-featured{% endif %}" data-project data-category="{{ project.data.category }}">
+  <a class="project-image-link" href="{{ project.url | url }}" tabindex="-1" aria-hidden="true">{% if project.data.cover %}<img class="project-cover-image" src="{{ project.data.cover | url }}" alt="" loading="lazy" decoding="async"{% if project.data.coverWidth and project.data.coverHeight %} width="{{ project.data.coverWidth }}" height="{{ project.data.coverHeight }}"{% endif %}>{% else %}{{ visual(project.data.chart, project.data.title) }}{% endif %}</a>
+  <div class="project-card-body">
+    <div class="card-kicker"><span>{{ project.data.category }}</span>{% if project.data.example %}<span class="sample-label">Example project</span>{% endif %}</div>
+    <h3><a href="{{ project.url | url }}">{{ project.data.title }}<span class="card-arrow" aria-hidden="true">↗</span></a></h3>
+    <p>{{ project.data.description }}</p>
+    <ul class="tag-list" aria-label="Tools">{% for tool in project.data.tools %}<li class="tag">{{ tool }}</li>{% endfor %}</ul>
+    <a class="card-cta" href="{{ project.url | url }}" aria-label="Explore the case study: {{ project.data.title }}">Explore the case study <span aria-hidden="true">→</span></a>
+  </div>
+</article>

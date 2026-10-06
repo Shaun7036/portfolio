@@ -1,0 +1,18 @@
+{
+  "name": "analytics-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A fast, Markdown-powered analytics portfolio for GitHub Pages.",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy",
+    "check": "npm run build && node scripts/check-site.mjs"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.6"
+  }
+}

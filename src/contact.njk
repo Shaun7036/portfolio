@@ -1,0 +1,34 @@
+---
+layout: layouts/base.njk
+title: Contact
+description: Get in touch about analytics opportunities, projects, or collaboration.
+permalink: /contact/
+---
+<div class="page-shell">
+  <header class="page-intro">
+    <p class="eyebrow">Start a conversation</p>
+    <h1>Good work starts<br>with a question.</h1>
+    <p class="lede">For opportunities, collaborations, or a conversation about the work, get in touch.</p>
+  </header>
+  <div class="contact-grid">
+    <section class="contact-card">
+      <p class="section-label">01 / Email</p>
+      <h2>Say hello.</h2>
+      <p>The best place to start a conversation about a role or a project.</p>
+      {% if site.email %}<a class="text-link" href="mailto:{{ site.email }}">{{ site.email }} <span aria-hidden="true">↗</span></a>{% else %}<p class="contact-pending">Email address coming soon.</p>{% endif %}
+    </section>
+    <section class="contact-card">
+      <p class="section-label">02 / LinkedIn</p>
+      <h2>Connect professionally.</h2>
+      <p>A little more about my experience and professional interests.</p>
+      {% if site.linkedin %}<a class="text-link" href="{{ site.linkedin }}" target="_blank" rel="noopener noreferrer">Find me on LinkedIn <span aria-hidden="true">↗</span></a>{% else %}<p class="contact-pending">LinkedIn profile coming soon.</p>{% endif %}
+    </section>
+    <section class="contact-card">
+      <p class="section-label">03 / GitHub</p>
+      <h2>Look under the hood.</h2>
+      <p>Code, notebooks, and the details behind the projects.</p>
+      {% if site.github %}<a class="text-link" href="{{ site.github }}" target="_blank" rel="noopener noreferrer">Explore my GitHub <span aria-hidden="true">↗</span></a>{% else %}<p class="contact-pending">GitHub profile coming soon.</p>{% endif %}
+    </section>
+  </div>
+  <div class="page-cta"><p>Looking for a quick professional overview?</p><a class="text-link" href="{{ '/resume/' | url }}">View my résumé <span aria-hidden="true">↗</span></a></div>
+</div>
