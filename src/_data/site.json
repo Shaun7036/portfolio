@@ -1,30 +1,30 @@
 {
-  "name": "Your Name",
-  "role": "Data & Analytics",
+  "name": "Shaun Lalani",
+  "role": "Analytics & Software Engineering",
   "description": "An analytics portfolio featuring selected projects, practical data stories, credentials, and professional experience.",
-  "intro": "I turn raw data into clear decisions, useful tools, and stories people can act on.",
-  "location": "Your location",
-  "availability": "Open to opportunities",
+  "intro": "hi! i'm shaun, i like turning raw data into clear decisions, useful tools, and stories people can act on. welcome to my portfolio!",
+  "location": "Los Angeles, CA + Montreal, QC",
+"availability": "Open to opportunities: Full-time [Dec 2027], Internships [Summer 2027]",
   "facts": [
     {
       "number": "01",
-      "label": "focus",
-      "value": "Business intelligence · Product analytics · Data storytelling"
+      "label": "interests",
+      "value": "Sports Analytics · ML/AI Operations · Data Engineering · Analytical Engineering"
     },
     {
       "number": "02",
       "label": "toolkit",
-      "value": "SQL · Python · Tableau / Power BI · Excel"
+      "value": "SQL · Python · Tableau / Power BI · Snowflake · dbt · cloud"
     },
     {
       "number": "03",
-      "label": "approach",
-      "value": "Ask · Validate · Analyze · Explain"
+      "label": "coursework",
+      "value": "Large Scale Optimization · Predictive Analytics · Data Engineering Fundamentals · Cloud Analytics"
     }
   ],
-  "email": "",
-  "github": "",
-  "linkedin": "",
+  "email": "lalani.shaun@gmail.com · shaunlal@usc.edu · shaun.lalani@mail.mcgill.ca",
+  "github": "https://github.com/Shaun7036",
+  "linkedin": "https://www.linkedin.com/in/shaun7036/?isSelfProfile=true",
   "resumePdf": "",
   "resumeTemplate": true,
   "url": ""
