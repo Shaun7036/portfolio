@@ -1,0 +1,23 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../lib/urls";
+import credentials from "../data/credentials.json";
+import site from "../data/site.json";
+---
+
+<BaseLayout title="Résumé" description="A concise view of experience, projects, education, and skills, with an editable LaTeX résumé.">
+  <div class="page-shell">
+    <header class="page-intro"><p class="eyebrow">The professional overview</p><h1>Experience, at a glance.</h1><p class="lede">A concise view of your background, with room for the contributions that matter most.</p><div class="button-row">{site.resumePdf && <a class="button" href={withBase(site.resumePdf)} download>Download résumé PDF <span aria-hidden="true">↓</span></a>}<a class="button button-secondary" href={withBase("/assets/resume/resume.tex")} download>Download LaTeX source <span aria-hidden="true">↓</span></a></div></header>
+    <article class="resume-preview" aria-label="Résumé template">
+      <header class="resume-header"><p class="section-label">{site.resumeTemplate ? "Résumé template" : "Résumé"}</p><h2>{site.name}</h2><p>{site.role} <span aria-hidden="true">/</span> {site.location}</p>{site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}</header>
+      <div class="prose">
+        <section><h3>Profile</h3><p>Write a short professional summary: your focus, relevant experience, and the kinds of questions your work helps answer.</p></section>
+        <section><h3>Experience</h3><p><strong>Your job title · Your organization</strong><br /><span class="muted">Start date — End date</span></p><ul><li>Describe a problem, your contribution, and the resulting deliverable.</li><li>Add an outcome you can substantiate, with context for any metrics.</li></ul><p><strong>Your previous job title · Your organization</strong><br /><span class="muted">Start date — End date</span></p><ul><li>Summarize relevant responsibilities and the decisions your work supported.</li></ul></section>
+        <section><h3>Selected projects</h3><p><strong>Your analytics project</strong><br />State the question, your method, and the most useful result. Link to a project page with the supporting work.</p><a class="text-link" href={withBase("/projects/")}>Browse project case studies <span aria-hidden="true">↗</span></a></section>
+        <section><h3>Education & credentials</h3>{credentials.map((credential) => <p><strong>{credential.title}</strong><br />{credential.issuer} · {credential.year}</p>)}</section>
+        <section><h3>Skills</h3><p><strong>Analysis:</strong> Your analytical methods.<br /><strong>Tools:</strong> Your languages, databases, and visualization tools.<br /><strong>Communication:</strong> Your reporting and collaboration skills.</p></section>
+      </div>
+      {site.resumeTemplate && <p class="example-notice">This is a résumé template. Replace the placeholder text with your own experience before sharing.</p>}
+    </article>
+  </div>
+</BaseLayout>

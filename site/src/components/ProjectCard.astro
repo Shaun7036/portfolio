@@ -1,0 +1,35 @@
+---
+import type { ProjectEntry } from "../lib/content";
+import { withBase } from "../lib/urls";
+import ProjectVisual from "./ProjectVisual.astro";
+
+interface Props {
+  project: ProjectEntry;
+  number?: string;
+  featured?: boolean;
+}
+
+const { project, number = "00", featured = false } = Astro.props;
+const { data } = project;
+const projectUrl = withBase(`/projects/${project.id}/`);
+---
+
+<article class:list={["project-card", { "project-card-featured": featured, "project-card-has-cover": data.cover }]} data-project data-category={data.category} data-chart={data.chart}>
+  <a class="project-card-link" href={projectUrl}>
+    <div class="project-card-art" aria-hidden="true">
+      {data.cover
+        ? <img class="project-cover-image" src={withBase(data.cover)} alt="" loading="lazy" decoding="async" width={data.coverWidth} height={data.coverHeight} />
+        : <ProjectVisual type={data.chart} title={data.title} />}
+    </div>
+    <div class="project-card-overlay">
+      <div class="project-card-top"><span>[{number}] {data.category}</span>{data.example && <span class="sample-label">Example project</span>}</div>
+      <div class="project-card-copy">
+        {data.highlight && <p class="project-highlight">{data.highlight}</p>}
+        <h3>{data.title} <span class="card-arrow" aria-hidden="true">↗</span></h3>
+        <p>{data.description}</p>
+        <ul class="tag-list">{data.tools.map((tool) => <li class="tag">{tool}</li>)}</ul>
+        <span class="card-cta">open case study <span aria-hidden="true">→</span></span>
+      </div>
+    </div>
+  </a>
+</article>

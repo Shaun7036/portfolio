@@ -1,6 +1,4 @@
 ---
-layout: layouts/post.njk
-tags: posts
 title: Your article title
 description: A short explanation of what the reader will learn.
 date: 2026-10-05

@@ -1,0 +1,19 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../lib/urls";
+import site from "../data/site.json";
+---
+
+<BaseLayout title="About" description="The background, interests, and approach behind the work.">
+  <div class="page-shell">
+    <header class="page-intro"><p class="eyebrow">A little context</p><h1>Behind the analysis.</h1><p class="lede">A place for your story: the experiences, interests, and perspective you bring to working with data.</p></header>
+    <div class="detail-grid">
+      <div class="prose">
+        <p class="section-label">01 / Background</p><h2>Hi, I'm {site.name}.</h2><p>Introduce yourself here in a few sentences. Share your current focus, the path that brought you to analytics, and the kinds of problems you enjoy understanding.</p><p>Give employers a sense of what you bring to a team. A specific experience or an example of how you work will say more than a long list of adjectives.</p>
+        <p class="section-label">02 / Approach</p><h2>How I approach a question.</h2><p>Use this space to describe your process in your own words: how you clarify a question, check the data, choose an appropriate method, and communicate a result.</p><p>Connect that process to a <a href={withBase("/projects/")}>project in your portfolio</a> so a reader can see the approach in practice.</p>
+        <p class="section-label">03 / Outside the spreadsheet</p><h2>A little more about me.</h2><p>Add an interest, a community you contribute to, or something you are learning. Keep this section personal and brief; remove it if you prefer a purely professional introduction.</p>
+      </div>
+      <aside class="sidebar-note" aria-label="At a glance"><p class="section-label">At a glance</p><dl><dt>Focus</dt><dd>{site.role}</dd><dt>Based in</dt><dd>{site.location}</dd><dt>Next chapter</dt><dd>{site.availability}</dd></dl><a class="text-link" href={withBase("/resume/")}>View my résumé <span aria-hidden="true">↗</span></a><a class="text-link" href={withBase("/credentials/")}>Education & credentials <span aria-hidden="true">↗</span></a></aside>
+    </div>
+  </div>
+</BaseLayout>

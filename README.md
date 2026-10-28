@@ -1,76 +1,84 @@
 # Analytics portfolio
 
-A minimal portfolio for analytics projects, professional credentials, a résumé, and short articles. Eleventy turns Markdown and small templates into static pages for GitHub Pages. There is no database, paid CMS, or server to maintain.
+A fast, static analytics portfolio built with Astro and supported by small Python content tools. Astro renders the website to plain HTML, CSS, and JavaScript; Python validates the content and scaffolds new projects or articles. GitHub Pages serves the generated files without a database or application server.
 
-The starter contains clearly labeled example projects and writing. Replace those examples and the profile placeholders before using the site in job applications.
+The starter still contains clearly labeled example projects, writing, experience, and résumé copy. Replace those examples before using the site in applications.
+
+## Stack
+
+- **Astro 7** for static pages, typed content collections, layouts, and components.
+- **Python 3.11+** with `uv` for content validation and scaffolding.
+- **Markdown** for projects and articles; **JSON** for shared profile data.
+- **Vanilla CSS and JavaScript** for the visual system and project filtering.
+- **GitHub Actions + GitHub Pages** for checks and deployment.
+
+This matches the repository layout used by the related Python/Astro project: Python lives at the root and the Astro application lives in `site/`.
 
 ## Run locally
 
-Install Node.js 22 or later. From this repository's root:
+Install Node.js 24 and [`uv`](https://docs.astral.sh/uv/). From the repository root:
 
 ```sh
+uv sync --extra dev --python 3.12
+cd site
 npm ci
 npm run dev
 ```
 
-Open the local address printed in the terminal. Changes to source files rebuild the preview. Stop it with `Ctrl+C`.
+Open the local address Astro prints. `npm run dev` validates the content first and then watches the site for changes.
+
+Run the complete checks before committing:
 
 ```sh
-npm run check                       # Build and check local pages and assets
-PATH_PREFIX=/portfolio/ npm run check  # Also check a GitHub project-site path
+uv run ruff check src tests
+uv run pytest -q
+cd site
+npm run check
+ASTRO_BASE=/portfolio-check npm run check
 ```
 
-The second command uses macOS/Linux shell syntax. In PowerShell, run `$env:PATH_PREFIX="/portfolio/"; npm run check`, then remove it with `Remove-Item Env:PATH_PREFIX`.
-
-Generated files live in `_site/`; edit the source, not that folder. `npm run check` verifies expected pages, unique page titles, heading structure, IDs, image alt attributes, and local links/assets/fragments. It does not test remote websites or replace a browser accessibility review.
+The second Astro check simulates a GitHub project site. Generated files live in `site/dist/`; never edit that folder.
 
 ## Make it yours
 
 | What to change | Where |
 | --- | --- |
-| Name, introduction, location, contact and profile links | `src/_data/site.json` |
-| Professional experience snapshot | `src/_data/experience.json` |
-| Qualifications and credentials | `src/_data/credentials.json` |
-| Project descriptions and case studies | `src/projects/*.md` |
-| Blog posts | `src/writing/*.md` |
-| Page structure and shared layouts | `src/` and `src/_includes/` |
-| Styling, local assets and résumé files | `src/assets/` |
+| Name, introduction, contact, status, and profile links | `site/src/data/site.json` |
+| Employer-facing experience | `site/src/data/experience.json` |
+| Education and credentials | `site/src/data/credentials.json` |
+| Project case studies | `site/src/content/projects/*.md` |
+| Blog posts | `site/src/content/writing/*.md` |
+| Page structure | `site/src/pages/` |
+| Shared layouts and cards | `site/src/layouts/` and `site/src/components/` |
+| Styling and browser behavior | `site/src/styles/site.css` and `site/src/scripts/site.js` |
+| Static images and résumé files | `site/public/assets/` |
+| Content rules and new-content commands | `src/portfolio_tools/` |
 
-Start with the [personalization checklist](docs/personalization-checklist.md), then use the [content guide](docs/content-guide.md) for field-by-field details. Copy the files in `templates/` when adding a project or article. They start as drafts and are outside the published source folder.
+Start with the [personalization checklist](docs/personalization-checklist.md), then use the [content guide](docs/content-guide.md). The [engineering guide](docs/engineering-guide.md) explains the architecture, debugging workflow, and safe customization points.
 
-The site includes Home, Projects, About, Credentials, Writing, Résumé, Contact, and a 404 page. Projects and articles receive their own pages. Writing is edited in Markdown and published with a commit; there is no in-browser authoring dashboard. Contact uses the links you supply rather than a hosted form.
+Create draft content without copying files manually:
+
+```sh
+uv run portfolio-content --root . new project forecasting-demand
+uv run portfolio-content --root . new article validating-a-dashboard
+```
 
 ## Publish on GitHub Pages
 
-1. Choose the site address: name the repository `YOUR-USERNAME.github.io` for `https://YOUR-USERNAME.github.io/`, or use a name such as `portfolio` for `https://YOUR-USERNAME.github.io/portfolio/`.
-2. Publish this existing local repository with either command-line Git or GitHub Desktop:
+The repository includes `.github/workflows/pages.yml`. It validates Python content, builds Astro with GitHub's actual Pages base path, checks the generated HTML, and uploads `site/dist/`.
 
-   - **Command line:** first create an **empty public repository** on GitHub. Do not initialize it with a README, license, or `.gitignore`. Then, from this repository's root, replace the example URL below with the new repository URL:
+1. Push the repository to GitHub.
+2. In **Settings → Pages**, choose **GitHub Actions** as the source.
+3. Push to `main`, or run **Actions → Publish portfolio → Run workflow**.
+4. Open the deployment URL and check the site on desktop and mobile.
 
-     ```sh
-     git remote add origin https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-     git push -u origin main
-     ```
+The same source works at both `username.github.io` and `username.github.io/repository`. Internal Astro links pass through `withBase()`; Markdown body links use relative paths. Do not add a `<base>` element or hardcode the repository name.
 
-   - **GitHub Desktop:** skip creating a repository on github.com. Choose **File → Add Local Repository**, select this `portfolio` folder, then choose **Publish repository** and leave **Keep this code private** unchecked.
+## Routine workflow
 
-   With either method, keep `package.json` and `.github/` at the repository root; do not upload the surrounding project mirror as an extra parent folder. Commit `package-lock.json`; do not commit `node_modules/` or `_site/`.
-3. In the GitHub repository, open **Settings → Pages** and select **GitHub Actions** as the source.
-4. The publish workflow runs on pushes to `main`. After enabling Pages, run **Actions → Publish portfolio → Run workflow**, or push another commit to `main`. If your default branch has a different name, update the trigger in `.github/workflows/pages.yml`.
-5. Open the deployment URL shown by the workflow and check the site on desktop and mobile.
+1. Edit JSON, Markdown, Astro, or CSS source.
+2. Run the Python and Astro checks above.
+3. Review `site/dist/` through `npm run preview` or the development server.
+4. Commit related changes and push. A push to `main` deploys after Pages is enabled.
 
-The workflow reads the site's actual base path from `actions/configure-pages` and passes it to the build as `PATH_PREFIX`. The same source supports both a root site and a repository subpath. Keep local links behind Eleventy's `url` filter; the [content guide](docs/content-guide.md#links-and-images) includes examples.
-
-GitHub Pages is available for public repositories on GitHub Free. See [GitHub's custom workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages). The workflow uses the official [checkout](https://github.com/actions/checkout), [setup-node](https://github.com/actions/setup-node), [configure-pages](https://github.com/actions/configure-pages), [upload-pages-artifact](https://github.com/actions/upload-pages-artifact), and [deploy-pages](https://github.com/actions/deploy-pages) actions.
-
-## Keep it maintainable
-
-- Add content in Markdown and data in JSON. Most changes do not need template edits.
-- Keep screenshots compressed and sized for their displayed width; link out to live dashboards rather than embedding them on every page.
-- Before publishing, run the checker and inspect the preview at a narrow mobile width. Open the résumé download and every contact link.
-- Commit related changes together with a descriptive message. Pull requests run the checker at both a root URL and a repository subpath.
-- Review dependency updates deliberately, commit the updated lockfile, and rerun checks. The runtime version is in `.nvmrc`; the site dependency is pinned in `package.json`.
-
-For routine updates: edit the source files, run `npm run check`, review the local preview, then `git add` the intended files, commit, and push. A push to `main` publishes the new version automatically after GitHub Pages is enabled.
-
-See [design notes](docs/design-notes.md) for the intended presentation and content hierarchy.
+Keep `uv.lock` and `site/package-lock.json` committed. Do not commit `.venv/`, `site/node_modules/`, or `site/dist/`.

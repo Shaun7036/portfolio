@@ -1,0 +1,36 @@
+---
+interface Props {
+  type?: "revenue" | "retention" | "mobility";
+  title: string;
+}
+
+const { type = "revenue", title } = Astro.props;
+const labels = ["M0", "M1", "M2", "M3", "M4", "M5"];
+const rows = Array.from({ length: 5 }, (_, index) => index);
+const columns = Array.from({ length: 6 }, (_, index) => index);
+---
+
+<div class={`project-visual visual-${type}`} role="img" aria-label={`Illustrative ${type} chart preview for ${title}. Demonstration data only.`}>
+  <div class="viz-topline"><span class="viz-dots" aria-hidden="true">● ● ●</span><span>{type} / overview</span><span>↗</span></div>
+  {type === "retention" ? (
+    <>
+      <div class="viz-title">The shape of retention<span>Customers returning over time</span></div>
+      <div class="cohort-grid" aria-hidden="true">
+        <span></span>{labels.map((label) => <span>{label}</span>)}
+        {rows.map((row) => <><span>C{row + 1}</span>{columns.map((column) => <i class={`heat-${Math.max(0, 5 - column)}`}></i>)}</>)}
+      </div>
+    </>
+  ) : type === "mobility" ? (
+    <>
+      <div class="viz-title">A city's daily rhythm<span>Trip volume by hour · weekday vs. weekend</span></div>
+      <svg class="chart-svg" viewBox="0 0 480 200" aria-hidden="true"><g class="chart-grid"><path d="M35 25H455M35 70H455M35 115H455M35 160H455"></path></g><g fill="#588274"><rect x="52" y="141" width="13" height="19"></rect><rect x="94" y="131" width="13" height="29"></rect><rect x="136" y="61" width="13" height="99"></rect><rect x="178" y="38" width="13" height="122"></rect><rect x="220" y="95" width="13" height="65"></rect><rect x="262" y="91" width="13" height="69"></rect><rect x="304" y="45" width="13" height="115"></rect><rect x="346" y="29" width="13" height="131"></rect><rect x="388" y="103" width="13" height="57"></rect><rect x="430" y="137" width="13" height="23"></rect></g><g fill="#b8cbc0"><rect x="68" y="144" width="13" height="16"></rect><rect x="110" y="136" width="13" height="24"></rect><rect x="152" y="111" width="13" height="49"></rect><rect x="194" y="83" width="13" height="77"></rect><rect x="236" y="73" width="13" height="87"></rect><rect x="278" y="64" width="13" height="96"></rect><rect x="320" y="75" width="13" height="85"></rect><rect x="362" y="85" width="13" height="75"></rect><rect x="404" y="112" width="13" height="48"></rect><rect x="446" y="134" width="13" height="26"></rect></g><g class="chart-label"><text x="53" y="190">00:00</text><text x="173" y="190">06:00</text><text x="299" y="190">12:00</text><text x="418" y="190">18:00</text></g></svg>
+    </>
+  ) : (
+    <>
+      <div class="viz-title">A clearer view of performance<span>Revenue trends · illustrative index</span></div>
+      <div class="viz-stat-row"><span><small>MEASURE</small>Revenue</span><span><small>DIMENSION</small>Month</span><span class="mini-line" aria-hidden="true">↗</span></div>
+      <svg class="chart-svg" viewBox="0 0 480 200" aria-hidden="true"><g class="chart-grid"><path d="M35 25H455M35 70H455M35 115H455M35 160H455"></path></g><path fill="#d9e3ef" d="M35 143L73 136L111 143L149 106L187 114L225 83L263 99L301 60L339 74L377 41L415 52L455 23V160H35Z"></path><path fill="none" stroke="#9aaabd" stroke-width="2" stroke-dasharray="5 5" d="M35 150L73 142L111 133L149 140L187 111L225 119L263 100L301 102L339 84L377 95L415 72L455 78"></path><path fill="none" stroke="#395f89" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M35 143L73 136L111 143L149 106L187 114L225 83L263 99L301 60L339 74L377 41L415 52L455 23"></path><circle cx="455" cy="23" r="5" fill="#395f89"></circle><g class="chart-label"><text x="35" y="190">JAN</text><text x="170" y="190">APR</text><text x="302" y="190">JUL</text><text x="426" y="190">OCT</text></g></svg>
+    </>
+  )}
+  <div class="viz-caption"><span><i></i>Illustrative preview</span><span>Sample data</span></div>
+</div>

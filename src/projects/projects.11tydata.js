@@ -1,5 +1,0 @@
-export default {
-  layout: "layouts/project.njk",
-  tags: ["projects"],
-  permalink: "/projects/{{ page.fileSlug }}/"
-};

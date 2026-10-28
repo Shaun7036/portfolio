@@ -2,8 +2,9 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 
 // A dependency-free check of this site's generated markup, not a general HTML validator.
-const output = path.resolve(process.argv[2] || "_site");
-const prefix = `/${(process.env.PATH_PREFIX || "").replace(/^\/+|\/+$/g, "")}/`.replace(/\/{2,}/g, "/");
+const output = path.resolve(process.argv[2] || "site/dist");
+const configuredPrefix = process.env.ASTRO_BASE || process.env.PATH_PREFIX || "";
+const prefix = `/${configuredPrefix.replace(/^\/+|\/+$/g, "")}/`.replace(/\/{2,}/g, "/");
 const origin = "https://portfolio-check.invalid";
 const errors = [];
 const documents = new Map();
@@ -101,7 +102,7 @@ for (const file of files) {
       ids.add(id);
     }
     if (name === "img" && !attrs.has("alt")) fail(file, "image is missing an alt attribute");
-    if (name === "base") fail(file, "base elements are unsupported; use the url filter for local paths");
+    if (name === "base") fail(file, "base elements are unsupported; use withBase() or relative URLs");
     for (const attribute of ["href", "src", "poster", "xlink:href"]) {
       if (attrs.has(attribute)) references.push({ file, value: attrs.get(attribute), kind: `${name} ${attribute}` });
     }
@@ -143,7 +144,7 @@ for (const { file, value, kind } of references) {
     continue;
   }
   if (prefix !== "/" && pathname !== prefix.slice(0, -1) && !pathname.startsWith(prefix)) {
-    fail(file, `${kind} escapes PATH_PREFIX ${prefix}: ${value}`);
+    fail(file, `${kind} escapes the configured base path ${prefix}: ${value}`);
     continue;
   }
   let target = pathname === prefix.slice(0, -1) ? "" : pathname.slice(prefix.length);
@@ -162,5 +163,5 @@ if (errors.length) {
   console.error(`Site check failed (${errors.length} problem${errors.length === 1 ? "" : "s"}):\n${errors.map((error) => `  - ${error}`).join("\n")}`);
   process.exitCode = 1;
 } else {
-  console.log(`Site check passed: ${documents.size} HTML pages, ${references.length} link/asset references, PATH_PREFIX=${prefix}`);
+  console.log(`Site check passed: ${documents.size} HTML pages, ${references.length} link/asset references, BASE_PATH=${prefix}`);
 }
