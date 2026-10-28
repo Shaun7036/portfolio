@@ -1,16 +1,72 @@
 [
   {
-    "organization": "Your most recent organization",
-    "role": "Your analytics role",
-    "period": "20XX — Present",
+    "organization": "Multidev Technologies Inc.",
+    "role": "Software Engineer",
+    "period": "Aug 2023 — Nov 2025",
+    "summary": "",
+    "highlight": "",
+    "example": true
+  },
+  {
+    "organization": "Multidev Technologies Inc.",
+    "role": "Technical & QA Analyst",
+    "period": "June 2022 — Aug 2023",
     "summary": "Describe the problem space, the people you supported, and the kind of analytical work you owned.",
     "highlight": "Add one verified result, deliverable, or measure of scale.",
     "example": true
   },
   {
-    "organization": "Another organization or client",
-    "role": "Another relevant role",
-    "period": "20XX — 20XX",
+    "organization": "USC Football",
+    "role": "Research Assistant",
+    "period": "May 2026 — Present",
+    "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
+    "highlight": "Name the decision, workflow, or audience the work helped.",
+    "example": true
+  },
+  {
+    "organization": "Trojan Sports Research Lab",
+    "role": "Research Assistant",
+    "period": "January 2026 — Present",
+    "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
+    "highlight": "Name the decision, workflow, or audience the work helped.",
+    "example": true
+  },
+  {
+    "organization": "ISE Analytics Student Association",
+    "role": "Research Assistant",
+    "period": "January 2026 — Present",
+    "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
+    "highlight": "Name the decision, workflow, or audience the work helped.",
+    "example": true
+  },
+  {
+    "organization": "Sports Business Association",
+    "role": "Research Assistant",
+    "period": "January 2026 — Present",
+    "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
+    "highlight": "Name the decision, workflow, or audience the work helped.",
+    "example": true
+  },
+    {
+    "organization": "Viterbi Graduate Student Association",
+    "role": "Department Senator",
+    "period": "August 2026 — Present",
+    "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
+    "highlight": "Name the decision, workflow, or audience the work helped.",
+    "example": true
+  },
+  {
+    "organization": "Trojan Climbing",
+    "role": "E-Board Trip Lead",
+    "period": "August 2026 — Present",
+    "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
+    "highlight": "Name the decision, workflow, or audience the work helped.",
+    "example": true
+  },
+  {
+    "organization": "Association of Energy Engineers",
+    "role": "Policy Consortium",
+    "period": "August 2026 — Present",
     "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
     "highlight": "Name the decision, workflow, or audience the work helped.",
     "example": true

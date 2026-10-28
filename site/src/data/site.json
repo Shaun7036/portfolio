@@ -14,12 +14,12 @@
     {
       "number": "02",
       "label": "toolkit",
-      "value": "SQL · Python · Tableau / Power BI · Snowflake · dbt · cloud"
+      "value": "SQL · Python · Tableau / Power BI · Snowflake Databricks · dbt · GCP, Azure, AWS"
     },
     {
       "number": "03",
       "label": "coursework",
-      "value": "Large Scale Optimization · Predictive Analytics · Data Engineering Fundamentals · Cloud Analytics"
+      "value": "Large Scale Optimization & Learning · Predictive Analytics · Data Engineering Fundamentals · Cloud Analytics"
     }
   ],
   "email": "lalani.shaun@gmail.com",
