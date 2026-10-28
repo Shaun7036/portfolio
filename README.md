@@ -63,6 +63,8 @@ uv run portfolio-content --root . new project forecasting-demand
 uv run portfolio-content --root . new article validating-a-dashboard
 ```
 
+Projects, experience entries, and articles share curated `filterTags`. The homepage filter derives its Role, Skills, and Experience choices from only the content currently displayed there.
+
 ## Publish on GitHub Pages
 
 The repository includes `.github/workflows/pages.yml`. It validates Python content, builds Astro with GitHub's actual Pages base path, checks the generated HTML, and uploads `site/dist/`.

@@ -7,6 +7,15 @@ tools:
   - Python
   - SQL
   - pandas
+filterTags:
+  roles:
+    - Product analyst
+  skills:
+    - Python
+    - SQL
+    - pandas
+  experience:
+    - Project
 year: 20XX
 order: 2
 featured: true

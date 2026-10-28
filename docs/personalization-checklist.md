@@ -5,6 +5,7 @@
 - [ ] Complete `site/src/data/site.json`, including one primary `email` and any `alternateEmails`.
 - [ ] Replace the three profile facts with your actual interests, toolkit, and coursework or approach.
 - [ ] Replace every entry in `site/src/data/experience.json`; remove `example: true` after review.
+- [ ] Review every experience `filterTags` value and keep only roles and skills supported by the entry.
 - [ ] Read each public page and remove sections that do not fit your story.
 
 ## Projects
@@ -14,6 +15,7 @@
 - [ ] Create new drafts with `uv run portfolio-content --root . new project YOUR-SLUG`.
 - [ ] Give every project a unique `order`; mark up to three `featured: true`.
 - [ ] Add a verified `highlight`, real project context, and supported outcomes.
+- [ ] Curate each project's Role, Skills, and Experience filter tags.
 - [ ] Add an optimized cover image under `site/public/assets/images/` with accurate alt text and dimensions.
 - [ ] Set `draft: false` and remove `example: true` only when the case study is reviewed.
 
@@ -28,6 +30,7 @@
 
 - [ ] Delete or rewrite the sample articles in `site/src/content/writing/`.
 - [ ] Create drafts with `uv run portfolio-content --root . new article YOUR-SLUG`.
+- [ ] Add accurate filter tags to every published article.
 - [ ] Keep private material outside the repository, even when `draft: true`.
 
 ## Before publishing

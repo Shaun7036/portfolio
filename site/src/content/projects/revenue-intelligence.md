@@ -7,6 +7,15 @@ tools:
   - SQL
   - Power BI
   - Excel
+filterTags:
+  roles:
+    - BI analyst
+  skills:
+    - SQL
+    - Power BI
+    - Excel
+  experience:
+    - Project
 year: 20XX
 order: 1
 featured: true

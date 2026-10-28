@@ -3,6 +3,15 @@ title: Making an analytics project easy to follow
 description: A practical structure for explaining the question, method, evidence, and limits of a project.
 date: 2026-10-05
 category: Project notes
+filterTags:
+  roles:
+    - Analyst
+    - Writer
+  skills:
+    - Data storytelling
+    - Documentation
+  experience:
+    - Writing
 example: true
 draft: false
 ---

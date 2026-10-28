@@ -1,0 +1,55 @@
+---
+import type { FilterGroup } from "../lib/filters";
+
+interface Props {
+  groups: FilterGroup[];
+  totalItems: number;
+}
+
+const { groups, totalItems } = Astro.props;
+---
+
+<div class="portfolio-filter page-shell" data-portfolio-filter hidden>
+  <div class="portfolio-filter-bar">
+    <p class="portfolio-filter-label">filter by</p>
+    <div class="portfolio-filter-controls">
+      {groups.map((group) => (
+        <div class="portfolio-filter-group" data-portfolio-filter-group={group.key}>
+          <button
+            class="portfolio-filter-button"
+            type="button"
+            aria-expanded="false"
+            aria-controls={`portfolio-filter-${group.key}`}
+            data-portfolio-filter-trigger={group.key}
+          >
+            <span>{group.label}</span>
+            <span class="portfolio-filter-selected-count" data-portfolio-filter-trigger-count hidden></span>
+            <span class="portfolio-filter-chevron" aria-hidden="true">⌄</span>
+          </button>
+          <div
+            class="portfolio-filter-panel"
+            id={`portfolio-filter-${group.key}`}
+            data-portfolio-filter-panel={group.key}
+            hidden
+          >
+            <fieldset>
+              <legend>{group.label}</legend>
+              <div class="portfolio-filter-options">
+                {group.options.map((option) => (
+                  <label class="portfolio-filter-option">
+                    <input type="checkbox" value={option} data-portfolio-filter-option={group.key} />
+                    <span>{option}</span>
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      ))}
+    </div>
+    <button class="portfolio-filter-clear" type="button" data-portfolio-filter-clear hidden>clear all</button>
+    <p class="portfolio-filter-summary" data-portfolio-filter-summary aria-live="polite" aria-atomic="true">
+      {totalItems} items shown
+    </p>
+  </div>
+</div>

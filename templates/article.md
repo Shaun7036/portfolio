@@ -3,6 +3,14 @@ title: Your article title
 description: A short explanation of what the reader will learn.
 date: 2026-10-05
 category: Analytics practice
+filterTags:
+  roles:
+    - Analyst
+    - Writer
+  skills:
+    - Data storytelling
+  experience:
+    - Writing
 example: true
 draft: true
 ---

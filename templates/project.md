@@ -6,6 +6,14 @@ category: Business intelligence
 tools:
   - SQL
   - Python
+filterTags:
+  roles:
+    - Analyst
+  skills:
+    - SQL
+    - Python
+  experience:
+    - Project
 year: "2026"
 order: 4
 featured: false

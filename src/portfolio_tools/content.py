@@ -15,6 +15,7 @@ PROJECT_REQUIRED = {
     "description",
     "category",
     "tools",
+    "filterTags",
     "year",
     "order",
     "featured",
@@ -24,7 +25,8 @@ PROJECT_REQUIRED = {
     "duration",
     "dataset",
 }
-POST_REQUIRED = {"title", "description", "date", "category", "draft"}
+POST_REQUIRED = {"title", "description", "date", "category", "draft", "filterTags"}
+FILTER_GROUPS = ("roles", "skills", "experience")
 
 
 def _load_json(path: Path) -> Any:
@@ -74,6 +76,26 @@ def _validate_collection(directory: Path, required: set[str], kind: str) -> list
     return errors
 
 
+def _validate_filter_tags(value: object, source: str) -> list[str]:
+    errors: list[str] = []
+    if not isinstance(value, dict):
+        return [f"{source}: filterTags must be an object"]
+
+    for group in FILTER_GROUPS:
+        tags = value.get(group)
+        if not isinstance(tags, list) or not tags:
+            errors.append(f"{source}: filterTags.{group} must be a non-empty list")
+            continue
+        invalid = [tag for tag in tags if not isinstance(tag, str) or not tag.strip()]
+        if invalid:
+            errors.append(f"{source}: filterTags.{group} contains a blank or non-string tag")
+            continue
+        normalized = [tag.strip().casefold() for tag in tags]
+        if len(normalized) != len(set(normalized)):
+            errors.append(f"{source}: filterTags.{group} contains duplicate tags")
+    return errors
+
+
 def validate_repository(root: Path) -> list[str]:
     """Return validation errors for the data and Markdown that Astro publishes."""
 
@@ -111,6 +133,16 @@ def validate_repository(root: Path) -> list[str]:
         errors.append("credentials.json: expected a list")
     if not isinstance(experience, list):
         errors.append("experience.json: expected a list")
+    else:
+        for index, item in enumerate(experience):
+            source = f"experience.json[{index}]"
+            if not isinstance(item, dict):
+                errors.append(f"{source}: expected an object")
+                continue
+            for field in ("organization", "role", "period", "summary", "highlight"):
+                if not isinstance(item.get(field), str):
+                    errors.append(f"{source}: {field} must be a string")
+            errors.extend(_validate_filter_tags(item.get("filterTags"), source))
 
     resume_pdf = site.get("resumePdf", "")
     if resume_pdf:

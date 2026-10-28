@@ -5,6 +5,11 @@
     "period": "Aug 2023 — Nov 2025",
     "summary": "",
     "highlight": "",
+    "filterTags": {
+      "roles": ["Software Engineer"],
+      "skills": ["Software development"],
+      "experience": ["Professional"]
+    },
     "example": true
   },
   {
@@ -13,6 +18,11 @@
     "period": "June 2022 — Aug 2023",
     "summary": "Describe the problem space, the people you supported, and the kind of analytical work you owned.",
     "highlight": "Add one verified result, deliverable, or measure of scale.",
+    "filterTags": {
+      "roles": ["Technical & QA Analyst"],
+      "skills": ["Quality assurance"],
+      "experience": ["Professional"]
+    },
     "example": true
   },
   {
@@ -21,6 +31,11 @@
     "period": "May 2026 — Present",
     "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
     "highlight": "Name the decision, workflow, or audience the work helped.",
+    "filterTags": {
+      "roles": ["Research Assistant"],
+      "skills": ["Sports research"],
+      "experience": ["Research"]
+    },
     "example": true
   },
   {
@@ -29,6 +44,11 @@
     "period": "January 2026 — Present",
     "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
     "highlight": "Name the decision, workflow, or audience the work helped.",
+    "filterTags": {
+      "roles": ["Research Assistant"],
+      "skills": ["Sports research"],
+      "experience": ["Research"]
+    },
     "example": true
   },
   {
@@ -37,6 +57,11 @@
     "period": "January 2026 — Present",
     "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
     "highlight": "Name the decision, workflow, or audience the work helped.",
+    "filterTags": {
+      "roles": ["Research Assistant"],
+      "skills": ["Analytics research"],
+      "experience": ["Research"]
+    },
     "example": true
   },
   {
@@ -45,14 +70,24 @@
     "period": "January 2026 — Present",
     "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
     "highlight": "Name the decision, workflow, or audience the work helped.",
+    "filterTags": {
+      "roles": ["Research Assistant"],
+      "skills": ["Sports research"],
+      "experience": ["Research"]
+    },
     "example": true
   },
-    {
+  {
     "organization": "Viterbi Graduate Student Association",
     "role": "Department Senator",
     "period": "August 2026 — Present",
     "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
     "highlight": "Name the decision, workflow, or audience the work helped.",
+    "filterTags": {
+      "roles": ["Department Senator"],
+      "skills": ["Student governance"],
+      "experience": ["Leadership"]
+    },
     "example": true
   },
   {
@@ -61,6 +96,11 @@
     "period": "August 2026 — Present",
     "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
     "highlight": "Name the decision, workflow, or audience the work helped.",
+    "filterTags": {
+      "roles": ["Trip Lead"],
+      "skills": ["Event leadership"],
+      "experience": ["Leadership"]
+    },
     "example": true
   },
   {
@@ -69,6 +109,11 @@
     "period": "August 2026 — Present",
     "summary": "Use this entry for employment, an internship, consulting, research, or another experience relevant to employers.",
     "highlight": "Name the decision, workflow, or audience the work helped.",
+    "filterTags": {
+      "roles": ["Policy Consortium"],
+      "skills": ["Policy research"],
+      "experience": ["Community"]
+    },
     "example": true
   }
 ]

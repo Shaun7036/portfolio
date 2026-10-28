@@ -7,6 +7,15 @@ tools:
   - Python
   - SQL
   - Visualization
+filterTags:
+  roles:
+    - Data analyst
+  skills:
+    - Python
+    - SQL
+    - Visualization
+  experience:
+    - Project
 year: 20XX
 order: 3
 featured: true

@@ -98,7 +98,14 @@ When changing layout, inspect desktop, 390px mobile, keyboard focus, and print. 
 
 ## Browser JavaScript
 
-The browser script only enhances the project archive. All project cards render first; JavaScript reveals the filter buttons, toggles cards with `hidden`, updates `aria-pressed`, and announces the result count. If JavaScript fails, visitors still see every project.
+The browser script progressively enhances two independent filters:
+
+- The project archive keeps its single-select category buttons.
+- The homepage adds Role, Skills, and Experience checkbox popovers across projects, experience, and writing.
+
+Homepage items carry one JSON `data-portfolio-tags` attribute based on their `filterTags` object. Matching is OR within a group and AND across groups. The toolbar and empty states are hidden in the server HTML; JavaScript reveals the toolbar only after it finds every required control. If JavaScript fails, all content stays visible.
+
+Keep homepage selectors prefixed with `data-portfolio-filter-`. The project archive intentionally uses older generic `data-filter` hooks, and sharing hooks would make the two behaviors interfere.
 
 Avoid replacing this with a framework island unless the interaction becomes substantially more complex.
 
@@ -148,7 +155,12 @@ Inspect the rendered class names first. Astro markup must retain the classes exp
 
 ### Project filters do not appear
 
-The controls deliberately begin with `hidden`. Check the browser console and `site/src/scripts/site.js`. Confirm the archive contains `data-project-list`, `data-filter-controls`, `data-project`, and matching `data-category`/`data-filter` values.
+The controls deliberately begin with `hidden`. Check the browser console and `site/src/scripts/site.js`.
+
+- Homepage: confirm `data-portfolio-filter`, three triggers/panels, `data-portfolio-filter-item`, and valid JSON in `data-portfolio-tags`.
+- Project archive: confirm `data-project-list`, `data-filter-controls`, `data-project`, and matching `data-category`/`data-filter` values.
+
+If an item never matches, inspect its `filterTags` in source and make sure all three arrays are present. Python validates experience JSON; Astro validates project/article frontmatter.
 
 ### CI fails but local checks pass
 

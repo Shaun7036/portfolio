@@ -14,7 +14,15 @@ const { data } = project;
 const projectUrl = withBase(`/projects/${project.id}/`);
 ---
 
-<article class:list={["project-card", { "project-card-featured": featured, "project-card-has-cover": data.cover }]} data-project data-category={data.category} data-chart={data.chart}>
+<article
+  class:list={["project-card", { "project-card-featured": featured, "project-card-has-cover": data.cover }]}
+  data-project
+  data-category={data.category}
+  data-chart={data.chart}
+  data-portfolio-filter-item
+  data-portfolio-kind="project"
+  data-portfolio-tags={JSON.stringify(data.filterTags)}
+>
   <a class="project-card-link" href={projectUrl}>
     <div class="project-card-art" aria-hidden="true">
       {data.cover

@@ -3,6 +3,15 @@ title: Before the chart, ask a better question
 description: A short writing scaffold for connecting an analysis to the decision it should support.
 date: 2026-10-05
 category: Analytics practice
+filterTags:
+  roles:
+    - Analyst
+    - Writer
+  skills:
+    - Analytical framing
+    - Stakeholder communication
+  experience:
+    - Writing
 example: true
 draft: false
 ---

@@ -24,6 +24,7 @@ This copies `templates/project.md` to `site/src/content/projects/forecasting-dem
 | `highlight` | Short, verified proof point shown before the title |
 | `category` | Classification used by project filters |
 | `tools` | YAML list of tools actually used |
+| `filterTags` | Curated Role, Skills, and Experience tags used by the homepage filter |
 | `year` | Display year; quote a range such as `"2025–2026"` |
 | `order` | Unique ascending project order |
 | `featured` | Includes the project in the home-page shortlist |
@@ -38,6 +39,29 @@ This copies `templates/project.md` to `site/src/content/projects/forecasting-dem
 | `draft` | Excludes the page from all output while `true` |
 
 The page layout supplies the main heading, so body sections start at `##`. The home page shows the first three `featured: true` projects after sorting by `order`.
+
+## Homepage filter tags
+
+Every home-page project, experience entry, and article has the same `filterTags` shape:
+
+```yaml
+filterTags:
+  roles:
+    - Data analyst
+  skills:
+    - Python
+    - SQL
+  experience:
+    - Project
+```
+
+- `roles` describes the capacity you performed, such as Software Engineer, Research Assistant, or BI analyst.
+- `skills` lists evidenced tools or capabilities. Do not add a skill only to make it appear in the filter.
+- `experience` describes the context, such as Project, Professional, Research, Leadership, Community, or Writing.
+
+Multiple selected tags within one filter use OR matching; selections across different filters use AND matching. Tag capitalization is preserved for display and ignored for matching. The menus are generated from the featured projects, experience entries, and recent articles actually rendered on the home page, so unused tags do not appear.
+
+Experience tags live in each object in `site/src/data/experience.json`. Project and article tags live in their Markdown frontmatter. Keep every group nonempty and avoid duplicate spellings that differ only by capitalization.
 
 Save real cover images in `site/public/assets/images/` and set `cover` to `/assets/images/filename.webp`. The Astro component applies the correct GitHub Pages base path. Keep example charts only as presentation placeholders, not evidence.
 
