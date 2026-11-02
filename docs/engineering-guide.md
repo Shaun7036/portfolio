@@ -23,7 +23,7 @@ portfolio/
 ├── site/                         Astro application
 │   ├── astro.config.mjs          static output and base-path configuration
 │   ├── src/content.config.ts     frontmatter schemas
-│   ├── src/content/              projects and writing
+│   ├── src/content/              projects, experience, and writing
 │   ├── src/data/                 shared JSON
 │   ├── src/pages/                URL-producing pages
 │   ├── src/layouts/              shared page shells
@@ -50,18 +50,21 @@ The Python validator covers repository-level rules that are awkward in a compone
 
 Files in `site/src/pages/` create routes. For example, `about.astro` becomes `/about/`, while Astro's special `404.astro` becomes `/404.html`.
 
-Project and article detail routes are dynamic at source but static after the build:
+Project, experience, and article detail routes are dynamic at source but static after the build:
 
 - `pages/projects/[slug].astro` loads every non-draft project and emits `/projects/<filename>/`.
+- `pages/experience/[slug].astro` emits a page only for non-draft entries with `detailPage: true`.
 - `pages/writing/[slug].astro` does the same for articles.
 
-`lib/content.ts` is the single place for collection ordering and filtering. Projects sort by `order`; posts sort newest first. Drafts are filtered before route generation, so they cannot leak into the generated site.
+`lib/content.ts` is the single place for collection ordering and filtering. Projects and experience entries sort by `order`; posts sort newest first. Drafts are filtered before route generation, so they cannot leak into the generated site.
 
 ## Layout and component flow
 
 `BaseLayout.astro` owns the document `<head>`, metadata, skip link, header, navigation, footer, global CSS, and browser script. Every public page should use it.
 
-`ProjectLayout.astro` and `PostLayout.astro` wrap rendered Markdown. `ProjectCard.astro` renders the same project metadata on the home page and project archive. `ProjectVisual.astro` owns the three lightweight fallback illustrations.
+`ProjectLayout.astro`, `ExperienceLayout.astro`, and `PostLayout.astro` wrap rendered Markdown. `ProjectCard.astro` renders the same project metadata on the home page and project archive. `ExperienceCard.astro` renders the native expandable cards used by both experience grids. `ProjectVisual.astro` owns the three lightweight fallback illustrations.
+
+Experience cards use `<details>` and `<summary>`, so click, keyboard activation, and expanded-state semantics work without custom JavaScript. `detailPage: true` creates a dedicated experience route; `detailPath` instead points the card at an existing related page such as a project case study.
 
 Astro escapes expressions by default. Markdown content is rendered by Astro's content pipeline rather than inserted as arbitrary HTML.
 
@@ -108,6 +111,8 @@ Homepage items carry one JSON `data-portfolio-tags` attribute based on their `fi
 Keep homepage selectors prefixed with `data-portfolio-filter-`. The project archive intentionally uses older generic `data-filter` hooks, and sharing hooks would make the two behaviors interfere.
 
 Avoid replacing this with a framework island unless the interaction becomes substantially more complex.
+
+The experience expand/collapse interaction is native HTML and deliberately has no JavaScript controller. Filtering hides the outer `<details>` element, so it remains compatible with the homepage filter.
 
 ## Common customizations
 
@@ -160,7 +165,11 @@ The controls deliberately begin with `hidden`. Check the browser console and `si
 - Homepage: confirm `data-portfolio-filter`, three triggers/panels, `data-portfolio-filter-item`, and valid JSON in `data-portfolio-tags`.
 - Project archive: confirm `data-project-list`, `data-filter-controls`, `data-project`, and matching `data-category`/`data-filter` values.
 
-If an item never matches, inspect its `filterTags` in source and make sure all three arrays are present. Python validates experience JSON; Astro validates project/article frontmatter.
+If an item never matches, inspect its `filterTags` in source and make sure all three arrays are present. Astro validates experience, project, and article frontmatter; Python checks required top-level fields, slugs, ordering, and whether a `detailPage: true` experience has a Markdown body.
+
+### An experience page is missing
+
+Confirm the entry is in `site/src/content/experiences/`, has `draft: false`, and sets `detailPage: true`. Card-only entries intentionally generate no route. If the card should link to a project instead, keep `detailPage: false` and use a valid root-relative `detailPath`.
 
 ### CI fails but local checks pass
 

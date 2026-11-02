@@ -990,73 +990,215 @@ main:focus {
 
 /* Experience */
 
-.experience-list {
-  border-bottom: 1px solid var(--rule);
-}
-
-.experience-row {
+.experience-grid {
   display: grid;
-  grid-template-columns: minmax(120px, 170px) minmax(0, 1fr) minmax(190px, 270px);
-  gap: clamp(24px, 4vw, 56px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
   align-items: start;
-  padding: 30px 0;
-  border-top: 1px solid var(--rule);
 }
 
-.experience-meta {
+.experience-card {
+  overflow: clip;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: 0 8px 26px rgba(43, 45, 43, .04);
+}
+
+.experience-card:nth-child(4n + 2) {
+  background: #f2f7f5;
+}
+
+.experience-card:nth-child(4n + 3) {
+  background: #f3f5f9;
+}
+
+.experience-card:nth-child(4n + 4) {
+  background: #f7f3f4;
+}
+
+.experience-card summary {
   display: grid;
-  gap: 8px;
-  justify-items: start;
-  color: var(--quiet);
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: .04em;
-  text-transform: uppercase;
+  min-height: 280px;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  column-gap: 18px;
+  row-gap: 18px;
+  padding: 24px;
+  cursor: pointer;
+  list-style: none;
 }
 
-.experience-meta > span:first-child {
+.experience-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.experience-card summary:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: -4px;
+}
+
+.experience-card-index {
+  grid-column: 1;
+  grid-row: 1;
   color: var(--teal);
+  font-family: var(--mono);
   font-size: 11px;
 }
 
-.experience-org {
-  margin: 0 0 5px !important;
-  color: var(--teal) !important;
+.experience-card-copy {
+  display: flex;
+  min-width: 0;
+  grid-column: 2;
+  grid-row: 1;
+  flex-direction: column;
+}
+
+.experience-card-overline,
+.experience-card-period,
+.experience-card-toggle {
+  color: var(--quiet);
   font-family: var(--mono);
-  font-size: 10px !important;
+  font-size: 9px;
   letter-spacing: .05em;
   text-transform: uppercase;
 }
 
-.experience-row h3 {
-  margin: 0 0 9px;
-  font-size: clamp(23px, 2.7vw, 31px);
-  font-weight: 600;
-  letter-spacing: -.04em;
-  line-height: 1.15;
+.experience-card-overline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 14px;
+  color: var(--teal);
 }
 
-.experience-row p {
-  margin: 0;
+.experience-card-overline span:last-child:not(:first-child) {
+  color: var(--quiet);
+}
+
+.experience-card-role {
+  margin: 48px 0 8px;
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 600;
+  letter-spacing: -.045em;
+  line-height: 1.08;
+}
+
+.experience-card-review-label {
+  margin-top: 16px;
+}
+
+.experience-card-review-label + .experience-card-role {
+  margin-top: 22px;
+}
+
+.experience-card-description {
+  margin-top: 16px;
   color: var(--muted);
   font-size: 14px;
   line-height: 1.55;
 }
 
-.experience-highlight {
-  padding-left: 18px;
-  border-left: 2px solid #d3b75e;
-  color: #4e4c3a !important;
+.experience-card-toggle {
+  display: inline-flex;
+  grid-column: 2;
+  grid-row: 2;
+  align-items: center;
+  align-self: end;
+  justify-self: end;
+  gap: 8px;
+  color: var(--ink);
 }
 
-.experience-highlight span {
+.experience-card-toggle-open {
+  display: none;
+}
+
+.experience-card-toggle-mark {
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  border: 1px solid var(--rule-dark);
+  border-radius: 50%;
+  color: var(--teal);
+  font-size: 16px;
+  line-height: 1;
+  place-items: center;
+  transition: transform .18s ease;
+}
+
+.experience-card[open] .experience-card-toggle-closed {
+  display: none;
+}
+
+.experience-card[open] .experience-card-toggle-open {
+  display: inline;
+}
+
+.experience-card[open] .experience-card-toggle-mark {
+  transform: rotate(45deg);
+}
+
+.experience-card-body {
+  padding: 22px 24px 26px 63px;
+  border-top: 1px solid var(--rule);
+}
+
+.experience-card-body .section-label {
   display: block;
-  margin-bottom: 6px;
-  color: var(--quiet);
-  font-family: var(--mono);
-  font-size: 8px;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.experience-card-review-note {
+  margin: 0 0 16px;
+  color: #706530;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.experience-card-body ul {
+  margin: 0;
+  padding-left: 18px;
+  color: #454744;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.experience-card-body li + li {
+  margin-top: 9px;
+}
+
+.experience-card-body .text-link {
+  margin-top: 22px;
+}
+
+.experience-detail > .page-intro .tag-list {
+  margin-top: 24px;
+}
+
+.experience-detail-points {
+  margin: 0 0 64px;
+  padding: 28px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: #f2f7f5;
+}
+
+.experience-detail-points h2 {
+  margin: 6px 0 18px;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 600;
+  letter-spacing: -.045em;
+}
+
+.experience-detail-points ul {
+  display: grid;
+  gap: 10px;
+  max-width: 920px;
+  margin: 0;
+  padding-left: 20px;
+  color: #3f4743;
+  line-height: 1.55;
 }
 
 /* Small chart previews */
@@ -1951,14 +2093,6 @@ main:focus {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .experience-row {
-    grid-template-columns: 120px minmax(0, 1fr);
-  }
-
-  .experience-highlight {
-    grid-column: 2;
-  }
-
   .contact-grid {
     grid-template-columns: 1fr;
   }
@@ -2122,18 +2256,20 @@ main:focus {
     padding-block: 78px;
   }
 
-  .experience-row {
+  .experience-grid {
     grid-template-columns: 1fr;
-    gap: 16px;
   }
 
-  .experience-meta {
-    grid-template-columns: auto auto 1fr;
-    align-items: center;
+  .experience-card summary {
+    min-height: 250px;
   }
 
-  .experience-highlight {
-    grid-column: auto;
+  .experience-card-role {
+    margin-top: 36px;
+  }
+
+  .experience-card-body {
+    padding-left: 24px;
   }
 
   .section-heading {
@@ -2365,5 +2501,9 @@ main:focus {
     padding: 0;
     border: 0;
     box-shadow: none;
+  }
+
+  details.experience-card:not([open]) > :not(summary) {
+    display: block !important;
   }
 }

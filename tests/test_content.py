@@ -2,7 +2,12 @@ from pathlib import Path
 
 import pytest
 
-from portfolio_tools.content import _validate_filter_tags, scaffold_content, validate_repository
+from portfolio_tools.content import (
+    _validate_collection,
+    _validate_filter_tags,
+    scaffold_content,
+    validate_repository,
+)
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -25,6 +30,35 @@ def test_scaffold_copies_the_selected_template(tmp_path: Path) -> None:
 
     assert destination == tmp_path / "site" / "src" / "content" / "writing" / "clear-question.md"
     assert destination.read_text(encoding="utf-8") == "---\ndraft: true\n---\n"
+
+
+def test_scaffold_creates_experience_content(tmp_path: Path) -> None:
+    templates = tmp_path / "templates"
+    templates.mkdir()
+    (templates / "experience.md").write_text("---\ndetailPage: false\n---\n", encoding="utf-8")
+
+    destination = scaffold_content(tmp_path, "experience", "student-lead")
+
+    assert destination == tmp_path / "site" / "src" / "content" / "experiences" / "student-lead.md"
+    assert destination.read_text(encoding="utf-8") == "---\ndetailPage: false\n---\n"
+
+
+def test_experience_without_detail_page_may_have_empty_body(tmp_path: Path) -> None:
+    (tmp_path / "card-only.md").write_text(
+        "---\ndetailPage: false\norder: 1\n---\n",
+        encoding="utf-8",
+    )
+
+    assert _validate_collection(tmp_path, {"detailPage", "order"}, "experience") == []
+
+
+def test_experience_detail_page_requires_body(tmp_path: Path) -> None:
+    source = tmp_path / "detailed-role.md"
+    source.write_text("---\ndetailPage: true\norder: 1\n---\n", encoding="utf-8")
+
+    assert any("content body is empty" in error for error in _validate_collection(
+        tmp_path, {"detailPage", "order"}, "experience"
+    ))
 
 
 @pytest.mark.parametrize(

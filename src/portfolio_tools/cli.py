@@ -12,7 +12,7 @@ def parser() -> argparse.ArgumentParser:
     subcommands = command.add_subparsers(dest="command", required=True)
     subcommands.add_parser("validate", help="validate data and Markdown before an Astro build")
     new = subcommands.add_parser("new", help="create draft content from a template")
-    new.add_argument("kind", choices=("project", "article"))
+    new.add_argument("kind", choices=("project", "article", "experience"))
     new.add_argument("slug")
     return command
 

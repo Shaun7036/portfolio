@@ -2,11 +2,36 @@
 
 ## Profile, experience, and credentials
 
-Edit `site/src/data/site.json` without renaming its fields. `email` is the primary address used in the footer and résumé. Put additional addresses in `alternateEmails`; the contact page renders each address as a separate valid link. The `facts` array supplies the first three home-page facts, while status combines `availability` and `location`.
+Edit `site/src/data/site.json` without renaming its fields. `email` is the primary address used in the footer and résumé. Put additional addresses in `alternateEmails`; the contact page renders each address as a separate valid link. The `facts` array supplies the first three home-page facts, status combines `availability` and `location`, and `storytime` introduces the professional experience grid.
 
-Edit `site/src/data/credentials.json` for education, certifications, and professional development. Remove `example: true` after an entry is accurate. Edit `site/src/data/experience.json` for the home-page role snapshot; each `highlight` should be one supported result, deliverable, decision, or measure of scale.
+Edit `site/src/data/credentials.json` for education, certifications, and professional development. Remove `example: true` after an entry is accurate. Work and co-curricular roles live in `site/src/content/experiences/` so the expandable card and any optional detail page share one source of truth.
 
 JSON requires double quotes and forbids trailing commas. Run `uv run portfolio-content --root . validate` after changing shared data.
+
+## Add an experience
+
+From the repository root:
+
+```sh
+uv run portfolio-content --root . new experience student-leadership
+```
+
+This creates `site/src/content/experiences/student-leadership.md`. Every published entry becomes an expandable home-page card. Use `section: work` for professional or substantial research roles and `section: co-curricular` for student leadership, associations, and community work.
+
+| Field | Purpose |
+| --- | --- |
+| `organization`, `role`, `location` | Card identity and context |
+| `start`, `end` | `YYYY-MM`; use `present` for an active role |
+| `description` | One-sentence card summary |
+| `responsibilities` | Verified bullets revealed when the card opens |
+| `filterTags` | Role, Skills, and Experience filter values |
+| `order` | Unique display order across all experience cards |
+| `detailPage` | Generates `/experience/<filename>/` when `true` |
+| `detailPath`, `detailLabel` | Optional link to related work, usually a project page; do not combine with `detailPage: true` |
+| `example` | Keep `true` for unverified starter copy; the card and detail page show a review warning |
+| `draft` | Excludes the card and route while `true` |
+
+For a lightweight role, leave `detailPage: false` and keep the Markdown body empty. For substantial work, set it to `true` and write the longer narrative below the frontmatter using `##` headings. A project-based role can instead use `detailPath: /projects/project-slug/` so the card links to the existing case study without duplicating it.
 
 ## Add a project
 
@@ -61,7 +86,7 @@ filterTags:
 
 Multiple selected tags within one filter use OR matching; selections across different filters use AND matching. Tag capitalization is preserved for display and ignored for matching. The menus are generated from the featured projects, experience entries, and recent articles actually rendered on the home page, so unused tags do not appear.
 
-Experience tags live in each object in `site/src/data/experience.json`. Project and article tags live in their Markdown frontmatter. Keep every group nonempty and avoid duplicate spellings that differ only by capitalization.
+Experience, project, and article tags all live in their Markdown frontmatter. Keep every group nonempty and avoid duplicate spellings that differ only by capitalization.
 
 Save real cover images in `site/public/assets/images/` and set `cover` to `/assets/images/filename.webp`. The Astro component applies the correct GitHub Pages base path. Keep example charts only as presentation placeholders, not evidence.
 

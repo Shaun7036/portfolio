@@ -1,14 +1,14 @@
 # Analytics portfolio
 
-A fast, static analytics portfolio built with Astro and supported by small Python content tools. Astro renders the website to plain HTML, CSS, and JavaScript; Python validates the content and scaffolds new projects or articles. GitHub Pages serves the generated files without a database or application server.
+A fast, static analytics portfolio built with Astro and supported by small Python content tools. Astro renders the website to plain HTML, CSS, and JavaScript; Python validates the content and scaffolds new projects, experience entries, or articles. GitHub Pages serves the generated files without a database or application server.
 
-The starter still contains clearly labeled example projects, writing, experience, and résumé copy. Replace those examples before using the site in applications.
+The starter still contains clearly labeled example projects, experience entries, writing, and résumé copy. Replace those examples before using the site in applications.
 
 ## Stack
 
 - **Astro 7** for static pages, typed content collections, layouts, and components.
 - **Python 3.11+** with `uv` for content validation and scaffolding.
-- **Markdown** for projects and articles; **JSON** for shared profile data.
+- **Markdown** for projects, experience, and articles; **JSON** for shared profile data.
 - **Vanilla CSS and JavaScript** for the visual system and project filtering.
 - **GitHub Actions + GitHub Pages** for checks and deployment.
 
@@ -44,7 +44,7 @@ The second Astro check simulates a GitHub project site. Generated files live in 
 | What to change | Where |
 | --- | --- |
 | Name, introduction, contact, status, and profile links | `site/src/data/site.json` |
-| Employer-facing experience | `site/src/data/experience.json` |
+| Work and co-curricular experience | `site/src/content/experiences/*.md` |
 | Education and credentials | `site/src/data/credentials.json` |
 | Project case studies | `site/src/content/projects/*.md` |
 | Blog posts | `site/src/content/writing/*.md` |
@@ -60,6 +60,7 @@ Create draft content without copying files manually:
 
 ```sh
 uv run portfolio-content --root . new project forecasting-demand
+uv run portfolio-content --root . new experience student-leadership
 uv run portfolio-content --root . new article validating-a-dashboard
 ```
 

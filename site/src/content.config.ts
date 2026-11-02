@@ -8,6 +8,8 @@ const filterTags = z.object({
   experience: z.array(z.string().trim().min(1)).min(1),
 });
 
+const monthKey = z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/, "Use YYYY-MM");
+
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/projects" }),
   schema: z.object({
@@ -50,4 +52,27 @@ const writing = defineCollection({
   }),
 });
 
-export const collections = { projects, writing };
+const experiences = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/experiences" }),
+  schema: z.object({
+    organization: z.string().trim().min(1),
+    role: z.string().trim().min(1),
+    section: z.enum(["work", "co-curricular"]),
+    start: monthKey,
+    end: z.union([monthKey, z.literal("present")]),
+    location: z.string().trim().optional(),
+    description: z.string().trim().min(1),
+    responsibilities: z.array(z.string().trim().min(1)).min(1),
+    filterTags,
+    order: z.number().int().positive(),
+    detailPage: z.boolean().default(false),
+    detailPath: z.string().regex(/^\/(?!\/)/, "Use one root-relative internal path").optional(),
+    detailLabel: z.string().trim().min(1).optional(),
+    example: z.boolean().default(false),
+    draft: z.boolean().default(false),
+  }).refine((data) => !(data.detailPage && data.detailPath), {
+    message: "Use detailPage or detailPath, not both",
+  }),
+});
+
+export const collections = { projects, writing, experiences };

@@ -4,8 +4,9 @@
 
 - [ ] Complete `site/src/data/site.json`, including one primary `email` and any `alternateEmails`.
 - [ ] Replace the three profile facts with your actual interests, toolkit, and coursework or approach.
-- [ ] Replace every entry in `site/src/data/experience.json`; remove `example: true` after review.
+- [ ] Review every entry in `site/src/content/experiences/`; remove `example: true` after review.
 - [ ] Review every experience `filterTags` value and keep only roles and skills supported by the entry.
+- [ ] Verify the starter co-curricular descriptions and responsibility bullets against your actual work.
 - [ ] Read each public page and remove sections that do not fit your story.
 
 ## Projects

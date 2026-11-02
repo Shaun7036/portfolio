@@ -1,22 +1,23 @@
 ---
-title: Revenue intelligence
-description: A reporting concept that connects revenue trends to the questions a business needs to answer.
-highlight: "Dashboard-ready KPI model"
-category: Business intelligence
+title: Cross Sport Scouter
+description: I was thinking about Remco Evencopool a while back, a former soccer youth player who ended up becoming olympic cyclist after changing sports. It made me wonder, if it possible to build a half-decent cross-sport scouter?.
+highlight: "A scouting tool which can be used to identify players who could succeed in other sports."
+category: Sports Analytics
 tools:
-  - SQL
-  - Power BI
-  - Excel
+  - Astro Web Framework
+  - Github Pages
+  - Python []
 filterTags:
   roles:
-    - BI analyst
+    - Sports Analyst
+    - Analytical Engineering
   skills:
-    - SQL
-    - Power BI
-    - Excel
+    - Machine Learning & Predictive Analytics
+    - Software Engineering
+    - DevOps
   experience:
     - Project
-year: 20XX
+year: 2026
 order: 1
 featured: true
 chart: revenue

@@ -100,7 +100,7 @@ if (portfolioFilter) {
 
       const activeCount = Object.values(selected).reduce((total, values) => total + values.length, 0);
       clearButton.hidden = activeCount === 0;
-      summary.textContent = `${visibleCount} ${visibleCount === 1 ? 'item' : 'items'} shown · ${kindCounts.project} ${kindCounts.project === 1 ? 'project' : 'projects'} · ${kindCounts.experience} experience · ${kindCounts.writing} ${kindCounts.writing === 1 ? 'article' : 'articles'}`;
+      summary.textContent = `${visibleCount} ${visibleCount === 1 ? 'item' : 'items'} shown · ${kindCounts.project} ${kindCounts.project === 1 ? 'project' : 'projects'} · ${kindCounts.experience} ${kindCounts.experience === 1 ? 'experience entry' : 'experience entries'} · ${kindCounts.writing} ${kindCounts.writing === 1 ? 'article' : 'articles'}`;
     };
 
     triggers.forEach(trigger => {
