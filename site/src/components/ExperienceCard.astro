@@ -1,0 +1,51 @@
+---
+import type { ExperienceEntry } from "../lib/content";
+import { experiencePeriod, pad } from "../lib/content";
+import { withBase } from "../lib/urls";
+
+interface Props {
+  experience: ExperienceEntry;
+  number: number;
+}
+
+const { experience, number } = Astro.props;
+const { data } = experience;
+const detailPath = data.detailPage
+  ? `/experience/${experience.id}/`
+  : data.detailPath;
+const detailLabel = data.detailLabel || (data.detailPage ? "read the full experience" : "view related work");
+---
+
+<details
+  class="experience-card"
+  data-portfolio-filter-item
+  data-portfolio-kind="experience"
+  data-portfolio-tags={JSON.stringify(data.filterTags)}
+>
+  <summary>
+    <span class="experience-card-index" aria-hidden="true">[{pad(number)}]</span>
+    <span class="experience-card-copy">
+      <span class="experience-card-overline">
+        <span>{data.organization}</span>
+        {data.location && <span>{data.location}</span>}
+      </span>
+      {data.example && <span class="sample-label experience-card-review-label">Starter copy · review</span>}
+      <span class="experience-card-role" role="heading" aria-level="3">{data.role}</span>
+      <span class="experience-card-period">{experiencePeriod(data.start, data.end)}</span>
+      <span class="experience-card-description">{data.description}</span>
+    </span>
+    <span class="experience-card-toggle" aria-hidden="true">
+      <span class="experience-card-toggle-closed">details</span>
+      <span class="experience-card-toggle-open">close</span>
+      <span class="experience-card-toggle-mark">+</span>
+    </span>
+  </summary>
+  <div class="experience-card-body">
+    <p class="section-label">{data.example ? "Editable starter points" : "Responsibilities & work"}</p>
+    {data.example && <p class="experience-card-review-note">These prompts are not verified résumé claims. Replace them with your actual work before publishing.</p>}
+    <ul>
+      {data.responsibilities.map((responsibility) => <li>{responsibility}</li>)}
+    </ul>
+    {detailPath && <a class="text-link" href={withBase(detailPath)}>{detailLabel} <span aria-hidden="true">↗</span></a>}
+  </div>
+</details>
