@@ -11,6 +11,8 @@ responsibilities:
   - Migrated containerized infrastructure from Google Cloud Docker Swarm to AWS Lightsail and introduced GitHub Actions CI/CD, reducing deployment time from hours to minutes.
   - Built event-driven ingestion pipelines that synchronized MySQL and InterBase data, reducing manual reconciliation by 90%.
   - Added asynchronous processing and caching for shipping queries, improving workflow performance by 70%.
+  - Integrated CRM and POS systems with the shipping platform to remove redundant data entry and streamline order processing.
+  - Deployed centralized Grafana, Loki, and Alloy observability for cross-application log analysis and proactive monitoring.
 filterTags:
   roles:
     - Software Engineer
@@ -20,6 +22,7 @@ filterTags:
     - MySQL
     - AWS
     - CI/CD
+    - Observability
   experience:
     - Professional
 order: 1
@@ -47,3 +50,7 @@ I also built a package-management application for microservices and binaries usi
 I architected event-driven ingestion pipelines with Laravel observers, Redis queues, and SMTP alerts to synchronize MySQL with client InterBase databases. This improved data reliability and reduced manual reconciliation by 90%.
 
 For shipping queries, I implemented asynchronous background processing and caching that reduced API latency and improved workflow performance by 70%.
+
+## Systems integration and observability
+
+I connected CRM and POS workflows to the shipping platform so client teams could move data through the order lifecycle with less duplicate entry. I also deployed a centralized observability stack with Grafana, Loki, and Alloy to aggregate application logs, support incident investigation, and make production behavior easier to monitor.

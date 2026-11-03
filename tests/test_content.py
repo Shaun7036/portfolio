@@ -5,6 +5,7 @@ import pytest
 from portfolio_tools.content import (
     _validate_collection,
     _validate_filter_tags,
+    _validate_resume_versions,
     scaffold_content,
     validate_repository,
 )
@@ -59,6 +60,62 @@ def test_experience_detail_page_requires_body(tmp_path: Path) -> None:
     assert any("content body is empty" in error for error in _validate_collection(
         tmp_path, {"detailPage", "order"}, "experience"
     ))
+
+
+def _resume_registry(tmp_path: Path) -> dict[str, object]:
+    assets = tmp_path / "site" / "public" / "assets" / "resume"
+    assets.mkdir(parents=True)
+    (assets / "sports.pdf").write_bytes(b"%PDF-1.4\n")
+    (assets / "sports.tex").write_text("resume source", encoding="utf-8")
+    return {
+        "default": "sports",
+        "versions": [
+            {
+                "id": "sports",
+                "label": "Sports",
+                "title": "Sports resume",
+                "description": "A targeted version.",
+                "status": "Current",
+                "updated": "2026-11",
+                "pdf": "/assets/resume/sports.pdf",
+                "tex": "/assets/resume/sports.tex",
+                "notice": "Reviewed copy.",
+                "draft": False,
+            }
+        ],
+    }
+
+
+def test_resume_registry_accepts_existing_version_assets(tmp_path: Path) -> None:
+    assert _validate_resume_versions(tmp_path, _resume_registry(tmp_path)) == []
+
+
+def test_resume_registry_rejects_duplicate_ids(tmp_path: Path) -> None:
+    registry = _resume_registry(tmp_path)
+    registry["versions"].append(dict(registry["versions"][0]))
+
+    assert any("duplicate id" in error for error in _validate_resume_versions(tmp_path, registry))
+
+
+def test_resume_registry_rejects_missing_published_asset(tmp_path: Path) -> None:
+    registry = _resume_registry(tmp_path)
+    registry["versions"][0]["pdf"] = "/assets/resume/missing.pdf"
+
+    assert any("does not exist" in error for error in _validate_resume_versions(tmp_path, registry))
+
+
+def test_resume_registry_requires_published_default(tmp_path: Path) -> None:
+    registry = _resume_registry(tmp_path)
+    registry["default"] = "engineering"
+
+    assert any("default must match" in error for error in _validate_resume_versions(tmp_path, registry))
+
+
+def test_resume_registry_validates_optional_latex_asset(tmp_path: Path) -> None:
+    registry = _resume_registry(tmp_path)
+    registry["versions"][0]["tex"] = "/assets/resume/missing.tex"
+
+    assert any("tex does not exist" in error for error in _validate_resume_versions(tmp_path, registry))
 
 
 @pytest.mark.parametrize(

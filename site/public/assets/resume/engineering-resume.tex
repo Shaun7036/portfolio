@@ -1,0 +1,77 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[margin=0.58in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\definecolor{ink}{HTML}{171717}
+\definecolor{accent}{HTML}{287C6D}
+\hypersetup{colorlinks=true,urlcolor=accent,pdftitle={Shaun Lalani - Software and Data Engineering Resume},pdfauthor={Shaun Lalani}}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{2pt}
+\setlist[itemize]{leftmargin=1.25em,itemsep=1.5pt,topsep=2pt,parsep=0pt}
+\newcommand{\resumesection}[1]{\vspace{5pt}{\large\bfseries\color{accent}#1}\par\vspace{1pt}{\color{accent}\hrule}\vspace{3pt}}
+
+\begin{document}
+\color{ink}
+{\Huge\bfseries Shaun Lalani}\hfill{\large Software \& Data Engineering}\par
+Los Angeles, CA \enspace\textbar\enspace Montreal, QC \enspace\textbar\enspace 438-926-8091\par
+\href{mailto:lalani.shaun@gmail.com}{lalani.shaun@gmail.com} \enspace\textbar\enspace
+\href{https://www.linkedin.com/in/shaun7036/}{linkedin.com/in/shaun7036} \enspace\textbar\enspace
+\href{https://github.com/Shaun7036}{github.com/Shaun7036}
+
+\resumesection{Profile}
+Software and data engineer with experience building logistics platforms, event-driven data pipelines, cloud delivery workflows, and analytical systems. M.S. Analytics candidate combining production engineering with sports and decision-support applications.
+
+\resumesection{Experience}
+\textbf{Software Engineer}\hfill May 2023 -- Nov. 2025\par
+\textit{Multidev Technologies Inc. \enspace\textbar\enspace Montreal, QC}
+\begin{itemize}
+\item Led development of a cloud-native, multi-carrier shipping platform integrating Canada Post, FedEx, UPS, and USPS APIs for thousands of monthly shipments using Laravel, Vue.js, MySQL, and Inertia.
+\item Migrated containerized workloads from Google Cloud Docker Swarm to AWS Lightsail and introduced GitHub Actions CI/CD, reducing deployment time from hours to minutes and increasing release frequency by 3x.
+\item Built event-driven Laravel, Redis, MySQL, and InterBase ingestion pipelines that reduced manual reconciliation by 90\%; added background processing and caching that improved shipping workflow performance by 70\%.
+\item Developed reusable carrier libraries, CRM/POS integrations, Chocolatey/ProGet package tooling, and centralized Grafana/Loki/Alloy observability for production services.
+\end{itemize}
+
+\textbf{Junior Software Engineer}\hfill Jan. 2023 -- May 2023\par
+\textit{Multidev Technologies Inc. \enspace\textbar\enspace Montreal, QC}
+\begin{itemize}
+\item Built Python and Object Pascal tools for InterBase extraction, transformation, auditing, and visualization with Pandas and Seaborn.
+\item Improved ORM and SQL query efficiency by 30\% through indexing and transaction handling; automated client onboarding with Python, Jinja2, and Pandas, improving onboarding efficiency by 80\%.
+\item Added PHPUnit and Postman validation, refactored legacy modules, and improved internal documentation for regression safety and maintainability.
+\end{itemize}
+
+\textbf{Technical Analyst / QA Analyst}\hfill Jun. 2022 -- Dec. 2022\par
+\textit{Multidev Technologies Inc. \enspace\textbar\enspace Montreal, QC}
+\begin{itemize}
+\item Automated login and backup workflows with Python across InterBase, MySQL, and Firebird; supported POS/CRM clients and event load management.
+\item Deployed ELK-based centralized log analysis to improve client-side troubleshooting and operational visibility.
+\end{itemize}
+
+\resumesection{Selected Engineering Projects}
+\textbf{USC Football Analytics Data Warehouse}\hfill May 2026 -- Ongoing\par
+\textit{dbt, SQL, Python, Azure, Databricks}
+\begin{itemize}
+\item Design and implement an analytical warehouse ingesting PFF API data for repeatable pipelines, dashboarding, and football decision support.
+\end{itemize}
+\textbf{Electromagnetic Tweezer Apparatus}\hfill Sept. 2021 -- Apr. 2022\par
+\textit{Python, MATLAB, OpenCV, Pandas}
+\begin{itemize}
+\item Processed image sequences and built a particle-tracking workflow to support a control scheme for tweezer manipulation; maintained project plans and LaTeX documentation.
+\end{itemize}
+
+\resumesection{Education}
+\textbf{University of Southern California}\hfill Jan. 2026 -- Dec. 2027 (expected)\par
+M.S. Analytics, CGPA 3.85\par
+\textbf{McGill University}\hfill Sept. 2017 -- May 2022\par
+B.Eng. Electrical Engineering; Minor in Technological Entrepreneurship
+
+\resumesection{Technical Skills}
+\textbf{Languages:} PHP, Python, Java, JavaScript, SQL, Object Pascal, Rust, Bash, PowerShell\par
+\textbf{Frameworks:} Laravel, Vue.js, React, Node.js, Express.js, Tailwind, PrimeVue\par
+\textbf{Data:} MySQL, PostgreSQL, MSSQL, InterBase, Firebird, Snowflake, Databricks, BigQuery, dbt, Spark, Pandas\par
+\textbf{Cloud \& Delivery:} AWS, GCP, Azure, Docker, GitHub Actions, Nginx, Grafana, Loki, Alloy, ELK, ProGet, Chocolatey\par
+\textbf{Coursework:} Cloud Analytics, Data Engineering Fundamentals, Reinforcement Learning, Large-Scale Optimization, Predictive Analytics
+\end{document}

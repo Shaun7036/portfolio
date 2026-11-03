@@ -8,6 +8,7 @@ from typing import Any
 
 EMAIL = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 SLUG = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
+MONTH = re.compile(r"^\d{4}-(0[1-9]|1[0-2])$")
 FIELD = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*):(?:\s*(.*))?$", re.MULTILINE)
 
 PROJECT_REQUIRED = {
@@ -112,6 +113,74 @@ def _validate_filter_tags(value: object, source: str) -> list[str]:
     return errors
 
 
+def _validate_resume_versions(root: Path, registry: object) -> list[str]:
+    errors: list[str] = []
+    source = "resumes.json"
+    if not isinstance(registry, dict):
+        return [f"{source}: expected an object"]
+
+    default = registry.get("default")
+    versions = registry.get("versions")
+    if not isinstance(default, str) or not SLUG.fullmatch(default):
+        errors.append(f"{source}: default must be a lowercase kebab-case id")
+    if not isinstance(versions, list) or not versions:
+        return errors + [f"{source}: versions must be a non-empty list"]
+
+    public_root = (root / "site" / "public").resolve()
+    published_ids: list[str] = []
+    seen_ids: set[str] = set()
+
+    def validate_asset(value: object, suffix: str, item_source: str, field: str) -> None:
+        if not isinstance(value, str) or not value.startswith("/") or not value.lower().endswith(suffix):
+            errors.append(f"{item_source}: {field} must be a root-relative {suffix} path")
+            return
+        asset = (public_root / value.lstrip("/")).resolve()
+        if not asset.is_relative_to(public_root):
+            errors.append(f"{item_source}: {field} must stay inside site/public")
+        elif not asset.is_file():
+            errors.append(f"{item_source}: {field} does not exist: {asset}")
+
+    for index, version in enumerate(versions):
+        item_source = f"{source}.versions[{index}]"
+        if not isinstance(version, dict):
+            errors.append(f"{item_source}: expected an object")
+            continue
+
+        version_id = version.get("id")
+        if not isinstance(version_id, str) or not SLUG.fullmatch(version_id):
+            errors.append(f"{item_source}: id must use lowercase kebab-case")
+        elif version_id in seen_ids:
+            errors.append(f"{item_source}: duplicate id: {version_id}")
+        else:
+            seen_ids.add(version_id)
+
+        for field in ("label", "title", "description", "status", "notice"):
+            if not isinstance(version.get(field), str) or not version[field].strip():
+                errors.append(f"{item_source}: {field} must be a non-empty string")
+        if not isinstance(version.get("updated"), str) or not MONTH.fullmatch(version["updated"]):
+            errors.append(f"{item_source}: updated must use YYYY-MM")
+
+        draft = version.get("draft")
+        if not isinstance(draft, bool):
+            errors.append(f"{item_source}: draft must be true or false")
+            draft = True
+        if not draft and isinstance(version_id, str):
+            published_ids.append(version_id)
+
+        pdf = version.get("pdf")
+        if not draft or pdf:
+            validate_asset(pdf, ".pdf", item_source, "pdf")
+        tex = version.get("tex")
+        if tex:
+            validate_asset(tex, ".tex", item_source, "tex")
+        elif tex is not None and not isinstance(tex, str):
+            errors.append(f"{item_source}: tex must be a path or an empty string")
+
+    if isinstance(default, str) and published_ids.count(default) != 1:
+        errors.append(f"{source}: default must match exactly one published version")
+    return errors
+
+
 def validate_repository(root: Path) -> list[str]:
     """Return validation errors for the data and Markdown that Astro publishes."""
 
@@ -122,6 +191,7 @@ def validate_repository(root: Path) -> list[str]:
     try:
         site = _load_json(data_dir / "site.json")
         credentials = _load_json(data_dir / "credentials.json")
+        resumes = _load_json(data_dir / "resumes.json")
     except (OSError, json.JSONDecodeError) as error:
         return [f"portfolio data could not be read: {error}"]
 
@@ -146,11 +216,7 @@ def validate_repository(root: Path) -> list[str]:
         errors.append("site.json: facts must contain exactly three entries")
     if not isinstance(credentials, list):
         errors.append("credentials.json: expected a list")
-    resume_pdf = site.get("resumePdf", "")
-    if resume_pdf:
-        resume_path = root / "site" / "public" / str(resume_pdf).lstrip("/")
-        if not resume_path.is_file():
-            errors.append(f"site.json: resumePdf does not exist: {resume_path}")
+    errors.extend(_validate_resume_versions(root, resumes))
 
     errors.extend(
         _validate_collection(root / "site" / "src" / "content" / "projects", PROJECT_REQUIRED, "project")

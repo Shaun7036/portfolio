@@ -44,7 +44,7 @@ portfolio/
 3. `astro build` resolves every page and dynamic route to static files in `site/dist/`.
 4. `scripts/check-site.mjs` reads the generated HTML, checks required routes/headings/titles/IDs/alt text, and verifies local links and fragments.
 
-The Python validator covers repository-level rules that are awkward in a component schema: valid primary/alternate emails, three profile facts, unique project order, safe slugs, required Markdown fields, and referenced résumé assets.
+The Python validator covers repository-level rules that are awkward in a component schema: valid primary/alternate emails, three profile facts, unique project order, safe slugs, required Markdown fields, and the résumé registry's IDs, default, dates, and PDF/LaTeX assets.
 
 ## Routing and content collections
 
@@ -114,11 +114,19 @@ Avoid replacing this with a framework island unless the interaction becomes subs
 
 The experience expand/collapse interaction is native HTML and deliberately has no JavaScript controller. Filtering hides the outer `<details>` element, so it remains compatible with the homepage filter.
 
+The résumé page is also progressively enhanced. Server-rendered anchors and version panels provide direct PDF and editable LaTeX-recreation actions. `site.js` adds tab behavior, roving keyboard focus, Left/Right/Home/End navigation, URL-fragment selection, and lazy loading for inactive PDF previews. Without JavaScript, the `<noscript>` rule reveals every version and the download links remain usable.
+
+Résumé version metadata lives in `site/src/data/resumes.json`; `site.json` deliberately has no résumé fields. Every internal asset URL passes through `withBase()` for GitHub Pages project paths. Add behavior with `data-resume-` hooks so styling classes remain free to change.
+
 ## Common customizations
 
 ### Change shared profile information
 
 Edit `site/src/data/site.json`. Use exactly one primary `email`; place additional addresses in `alternateEmails`.
+
+### Add a résumé version
+
+Copy the PDF and optional editable `.tex` recreation to `site/public/assets/resume/`, then add one entry to `site/src/data/resumes.json`. Published entries require an existing PDF, unique ID, review month, and notice. Set `draft: true` while preparing a version. The PDF is the published visual reference; the build intentionally does not compile LaTeX or assert that the `.tex` recreation reproduces it exactly.
 
 ### Add a new page
 

@@ -137,3 +137,60 @@ if (portfolioFilter) {
     update();
   }
 }
+
+// Résumé versions remain ordinary linked sections without JavaScript, then become keyboard-friendly tabs.
+const resumeSwitcher = document.querySelector('[data-resume-tabs]');
+if (resumeSwitcher) {
+  const tabs = [...resumeSwitcher.querySelectorAll('[role="tab"]')];
+  const panels = [...resumeSwitcher.querySelectorAll('[data-resume-panel]')];
+
+  if (tabs.length && tabs.length === panels.length) {
+    const panelFor = tab => panels.find(panel => panel.id === tab.getAttribute('aria-controls'));
+    const loadPreview = panel => {
+      const frame = panel?.querySelector('iframe[data-resume-pdf-src]');
+      if (frame && !frame.getAttribute('src')) frame.setAttribute('src', frame.dataset.resumePdfSrc);
+    };
+    const activate = (tab, { focus = false, updateHash = false } = {}) => {
+      const activePanel = panelFor(tab);
+      if (!activePanel) return;
+
+      tabs.forEach(item => {
+        const selected = item === tab;
+        item.setAttribute('aria-selected', String(selected));
+        item.tabIndex = selected ? 0 : -1;
+      });
+      panels.forEach(panel => { panel.hidden = panel !== activePanel; });
+      loadPreview(activePanel);
+      if (focus) tab.focus();
+      if (updateHash) history.replaceState(null, '', `#${activePanel.id}`);
+    };
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', event => {
+        event.preventDefault();
+        activate(tab, { updateHash: true });
+      });
+      tab.addEventListener('keydown', event => {
+        let targetIndex;
+        if (event.key === 'ArrowRight') targetIndex = (index + 1) % tabs.length;
+        else if (event.key === 'ArrowLeft') targetIndex = (index - 1 + tabs.length) % tabs.length;
+        else if (event.key === 'Home') targetIndex = 0;
+        else if (event.key === 'End') targetIndex = tabs.length - 1;
+        else return;
+
+        event.preventDefault();
+        activate(tabs[targetIndex], { focus: true, updateHash: true });
+      });
+    });
+
+    const activateFromHash = () => {
+      const hashId = decodeURIComponent(window.location.hash.slice(1));
+      const matchingTab = tabs.find(tab => tab.getAttribute('aria-controls') === hashId);
+      const defaultTab = tabs.find(tab => tab.getAttribute('aria-controls') === `resume-${resumeSwitcher.dataset.resumeDefault}`);
+      activate(matchingTab || defaultTab || tabs[0]);
+    };
+
+    window.addEventListener('hashchange', activateFromHash);
+    activateFromHash();
+  }
+}

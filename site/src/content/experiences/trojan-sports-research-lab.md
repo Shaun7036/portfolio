@@ -17,7 +17,7 @@ filterTags:
     - Sports research
   experience:
     - Research
-order: 5
+order: 4
 detailPage: false
 example: true
 draft: false

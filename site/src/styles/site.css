@@ -1853,46 +1853,212 @@ main:focus {
   font-weight: 600;
 }
 
-.resume-preview {
-  max-width: 920px;
-  margin: 0 auto 112px;
-  padding: clamp(28px, 6vw, 72px);
+.resume-page-shell {
+  padding-bottom: 112px;
+}
+
+.resume-page-intro {
+  padding-bottom: 54px;
+}
+
+.resume-switcher {
+  max-width: 1120px;
+  margin-inline: auto;
+}
+
+.resume-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 7px;
+  overflow-x: auto;
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  background: rgba(255,255,255,.68);
+  scrollbar-width: thin;
+}
+
+.resume-tab {
+  display: flex;
+  min-width: 180px;
+  min-height: 62px;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 13px 16px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease;
+}
+
+.resume-tab span {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.resume-tab small {
+  color: var(--quiet);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.resume-tab:hover {
+  border-color: var(--rule-dark);
+  background: var(--surface);
+}
+
+.resume-tab[aria-selected="true"] {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: white;
+}
+
+.resume-tab[aria-selected="true"] small {
+  color: rgba(255,255,255,.72);
+}
+
+.resume-tab:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+}
+
+.resume-version-stack {
+  margin-top: 18px;
+}
+
+.resume-version-panel {
+  overflow: hidden;
   border: 1px solid var(--rule);
   border-radius: 18px;
   background: var(--surface);
   box-shadow: var(--shadow);
 }
 
-.resume-header {
-  padding-bottom: 26px;
-  border-bottom: 2px solid var(--ink);
+.resume-version-panel[hidden] {
+  display: none;
 }
 
-.resume-header h2 {
-  margin: 10px 0 4px;
-  font-size: clamp(36px, 6vw, 58px);
-  letter-spacing: -.055em;
+.resume-version-panel:focus {
+  outline: none;
 }
 
-.resume-header p {
+.resume-version-panel:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 4px;
+}
+
+.resume-version-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 360px);
+  gap: 34px;
+  align-items: end;
+  padding: clamp(26px, 5vw, 46px);
+}
+
+.resume-version-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  align-items: center;
+  color: var(--quiet);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+
+.resume-status {
+  display: inline-flex;
+  padding: 4px 8px;
+  border: 1px solid rgba(40,124,109,.32);
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: #1f6256;
+}
+
+.resume-version-header h2 {
+  max-width: 16ch;
+  margin: 18px 0 10px;
+  font-size: clamp(32px, 4.8vw, 54px);
+  font-weight: 600;
+  letter-spacing: -.05em;
+  line-height: 1.02;
+}
+
+.resume-version-header p {
+  max-width: 60ch;
   margin: 0;
   color: var(--muted);
+  line-height: 1.6;
 }
 
-.resume-preview .prose {
-  max-width: none;
+.resume-version-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
-.resume-preview .prose section {
-  padding: 22px 0;
-  border-bottom: 1px solid var(--rule);
+.resume-version-actions .button {
+  min-height: 46px;
+  justify-content: center;
+  padding-inline: 13px;
+  text-align: center;
 }
 
-.resume-preview .prose h3 {
+.resume-version-notice {
+  margin: 0 clamp(26px, 5vw, 46px) 12px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--teal);
+  background: var(--teal-soft);
+  color: #315b52;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.resume-source-note {
+  margin: 0 clamp(26px, 5vw, 46px) 26px;
+  color: var(--quiet);
   font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: .08em;
+  font-size: 9px;
+  letter-spacing: .025em;
+  line-height: 1.55;
   text-transform: uppercase;
+}
+
+.resume-version-notice.is-archive {
+  border-left-color: #c8a84b;
+  background: rgba(238,231,189,.42);
+  color: #6b6030;
+}
+
+.resume-file-frame {
+  margin: 0 clamp(18px, 4vw, 38px) clamp(18px, 4vw, 38px);
+  overflow: hidden;
+  border: 1px solid var(--rule-dark);
+  border-radius: 14px;
+  background: #e8e8e3;
+}
+
+.resume-file-frame iframe {
+  display: block;
+  width: 100%;
+  height: min(82vh, 960px);
+  min-height: 660px;
+  border: 0;
+  background: white;
+}
+
+.resume-file-frame > p {
+  margin: 0;
+  padding: 12px 16px;
+  border-top: 1px solid var(--rule);
+  background: var(--surface);
+  color: var(--quiet);
+  font-size: 11px;
 }
 
 .muted {
@@ -2168,6 +2334,15 @@ main:focus {
     grid-template-columns: 130px 1fr;
     gap: 28px;
   }
+
+  .resume-version-header {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .resume-version-actions {
+    max-width: 460px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -2189,6 +2364,43 @@ main:focus {
 
   .main-nav a {
     white-space: nowrap;
+  }
+
+  .resume-page-shell {
+    padding-bottom: 78px;
+  }
+
+  .resume-tabs {
+    margin-inline: -5px;
+  }
+
+  .resume-tab {
+    min-width: 155px;
+  }
+
+  .resume-version-header {
+    padding: 24px 20px;
+  }
+
+  .resume-version-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-version-notice {
+    margin: 0 20px 12px;
+  }
+
+  .resume-source-note {
+    margin: 0 20px 20px;
+  }
+
+  .resume-file-frame {
+    margin: 0 12px 18px;
+  }
+
+  .resume-file-frame iframe {
+    height: 68vh;
+    min-height: 520px;
   }
 
   .intro {
@@ -2487,6 +2699,9 @@ main:focus {
   .site-header,
   .site-footer,
   .portfolio-filter,
+  .resume-tabs,
+  .resume-version-actions,
+  .resume-file-frame,
   .button-row,
   .page-cta,
   .contact-band {
@@ -2494,13 +2709,17 @@ main:focus {
   }
 
   .page-shell,
-  .resume-preview {
+  .resume-version-panel {
     width: 100%;
     max-width: none;
     margin: 0;
     padding: 0;
     border: 0;
     box-shadow: none;
+  }
+
+  .resume-version-panel[hidden] {
+    display: none !important;
   }
 
   details.experience-card:not([open]) > :not(summary) {

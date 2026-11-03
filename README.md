@@ -2,7 +2,7 @@
 
 A fast, static analytics portfolio built with Astro and supported by small Python content tools. Astro renders the website to plain HTML, CSS, and JavaScript; Python validates the content and scaffolds new projects, experience entries, or articles. GitHub Pages serves the generated files without a database or application server.
 
-The starter still contains clearly labeled example projects, experience entries, writing, and résumé copy. Replace those examples before using the site in applications.
+The site still contains clearly labeled starter project, experience, and writing copy. Review those entries before using the portfolio in applications.
 
 ## Stack
 
@@ -46,12 +46,14 @@ The second Astro check simulates a GitHub project site. Generated files live in 
 | Name, introduction, contact, status, and profile links | `site/src/data/site.json` |
 | Work and co-curricular experience | `site/src/content/experiences/*.md` |
 | Education and credentials | `site/src/data/credentials.json` |
+| Résumé versions and default tab | `site/src/data/resumes.json` |
+| Résumé PDFs and editable LaTeX recreations | `site/public/assets/resume/` |
 | Project case studies | `site/src/content/projects/*.md` |
 | Blog posts | `site/src/content/writing/*.md` |
 | Page structure | `site/src/pages/` |
 | Shared layouts and cards | `site/src/layouts/` and `site/src/components/` |
 | Styling and browser behavior | `site/src/styles/site.css` and `site/src/scripts/site.js` |
-| Static images and résumé files | `site/public/assets/` |
+| Static images and other downloadable files | `site/public/assets/` |
 | Content rules and new-content commands | `src/portfolio_tools/` |
 
 Start with the [personalization checklist](docs/personalization-checklist.md), then use the [content guide](docs/content-guide.md). The [engineering guide](docs/engineering-guide.md) explains the architecture, debugging workflow, and safe customization points.

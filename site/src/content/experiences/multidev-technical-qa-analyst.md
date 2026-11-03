@@ -9,6 +9,7 @@ description: Automated operational workflows, supported database reliability, an
 responsibilities:
   - Automated daily multi-platform login and backup-management workflows with Python across InterBase, MySQL, and Firebird environments.
   - Supported POS and CRM clients, maintained performance reports and daily checks, and assisted with load management during marquee events.
+  - Deployed an ELK stack for centralized client-side log analysis and more efficient troubleshooting.
 filterTags:
   roles:
     - Technical Analyst
@@ -17,6 +18,7 @@ filterTags:
     - Python
     - Quality assurance
     - Database operations
+    - ELK
   experience:
     - Professional
 order: 3

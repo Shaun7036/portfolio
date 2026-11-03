@@ -2,7 +2,7 @@
 
 ## Profile, experience, and credentials
 
-Edit `site/src/data/site.json` without renaming its fields. `email` is the primary address used in the footer and résumé. Put additional addresses in `alternateEmails`; the contact page renders each address as a separate valid link. The `facts` array supplies the first three home-page facts, status combines `availability` and `location`, and `storytime` introduces the professional experience grid.
+Edit `site/src/data/site.json` without renaming its fields. `email` is the primary address used in the footer and contact page. Put additional addresses in `alternateEmails`; the contact page renders each address as a separate valid link. Résumé contact details live in each PDF and editable LaTeX recreation, so update those separately. The `facts` array supplies the first three home-page facts, status combines `availability` and `location`, and `storytime` introduces the professional experience grid.
 
 Edit `site/src/data/credentials.json` for education, certifications, and professional development. Remove `example: true` after an entry is accurate. Work and co-curricular roles live in `site/src/content/experiences/` so the expandable card and any optional detail page share one source of truth.
 
@@ -116,9 +116,24 @@ Use meaningful alt text, real dimensions, compressed images, and captions with s
 
 ## Résumé
 
-Edit `site/public/assets/resume/resume.tex`. Export a PDF beside it as `resume.pdf`, then set `resumePdf` in `site/src/data/site.json` to `/assets/resume/resume.pdf`. The build does not compile LaTeX.
+`site/src/data/resumes.json` is the résumé registry. `default` selects the first active tab. Each object in `versions` controls one visitor-facing version:
 
-The web résumé is `site/src/pages/resume.astro`. When its placeholders are replaced, set `resumeTemplate` to `false` to remove the template notice.
+| Field | Purpose |
+| --- | --- |
+| `id` | Stable lowercase kebab-case key used by the URL fragment, such as `resume-sports` |
+| `label`, `title`, `description` | Tab label and visitor-facing context |
+| `status` | Short badge such as `Current` or `Older edition` |
+| `updated` | Review month in `YYYY-MM` format |
+| `pdf` | Root-relative PDF path under `site/public/` |
+| `tex` | Optional root-relative editable LaTeX recreation under `site/public/` |
+| `notice` | Version-specific context or caveat shown above the preview |
+| `draft` | Hides the version when `true`; a published version must have a PDF |
+
+PDFs and editable LaTeX recreations live in `site/public/assets/resume/`. The repository currently includes Sports, Engineering, and Full versions. The Full version is intentionally labeled as an older edition because its broader history may not reflect the newest targeted wording.
+
+To add a version, place the PDF and optional `.tex` recreation in that directory, add one registry object, and run validation. To change the default tab, update only the top-level `default` value. Keep IDs and filenames stable after sharing links.
+
+The supplied PDFs are the published visual references. Their `.tex` companions are editable recreations maintained separately, so compiling one is not guaranteed to reproduce the supplied PDF byte-for-byte or layout-for-layout. When you revise a version, compile the `.tex` file locally or in Overleaf, replace the matching PDF, update both files together, change `updated`, and review the browser preview and direct download. The build validates that assets exist but does not compile LaTeX.
 
 Set `site.url` to the published origin only, such as `https://your-name.github.io`, when known. The current Pages path is supplied separately by Astro's base configuration.
 

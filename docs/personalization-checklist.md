@@ -22,10 +22,11 @@
 
 ## Employer details
 
-- [ ] Replace the About-page copy in `site/src/pages/about.astro`.
-- [ ] Replace `site/src/data/credentials.json` entries and add verification links.
-- [ ] Update `site/src/pages/resume.astro`, then set `resumeTemplate` to `false`.
-- [ ] Update `site/public/assets/resume/resume.tex`, export a PDF, and set `resumePdf`.
+- [ ] Review the résumé-backed About-page copy in `site/src/pages/about.astro`.
+- [ ] Review `site/src/data/credentials.json` and add verification links if desired.
+- [ ] Review every entry in `site/src/data/resumes.json`, especially the `Older edition` notice.
+- [ ] After editing a `.tex` source in `site/public/assets/resume/`, replace its PDF and update the version's `updated` month.
+- [ ] Test the Sports, Engineering, and Full tabs, direct PDF links, downloads, and keyboard navigation.
 
 ## Writing
 

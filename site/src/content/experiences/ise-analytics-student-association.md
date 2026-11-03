@@ -1,23 +1,23 @@
 ---
 organization: ISE Analytics Student Association
-role: Research Assistant
+role: Member
 section: co-curricular
 start: "2026-01"
 end: present
 location: Los Angeles, CA
-description: Add a short description of the analytics research, events, or collaborative work you support in this association.
+description: Add a short description of the analytics events, community work, or collaborative projects you support as a member.
 responsibilities:
-  - Replace this prompt with one specific research or analytical responsibility.
+  - Replace this prompt with one specific membership, event, or analytical contribution.
   - Add a verified contribution, deliverable, or collaboration example.
 filterTags:
   roles:
-    - Research Assistant
+    - Member
   skills:
-    - Analytics research
+    - Analytics community
     - Collaboration
   experience:
-    - Research
-order: 6
+    - Community
+order: 5
 detailPage: false
 example: true
 draft: false
