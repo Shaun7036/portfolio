@@ -1,60 +1,196 @@
-\documentclass[10pt,letterpaper]{article}
-\usepackage[margin=0.58in]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
 \usepackage{enumitem}
-\usepackage{hyperref}
-\pagestyle{empty}
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{2pt}
-\setlist[itemize]{leftmargin=1.3em,itemsep=1.5pt,topsep=2pt,parsep=0pt}
-\newcommand{\resumesection}[1]{\vspace{5pt}{\large\scshape #1}\par\hrule\vspace{3pt}}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{iftex}
+\ifPDFTeX\input{glyphtounicode}\fi
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+\setlist[itemize]{itemsep=0pt, topsep=0pt}
+% \setlist[itemize]{topsep=0pt, itemsep=0pt, parsep=0pt, partopsep=0pt}
+
+
+% Section formatting
+\titleformat{\section}{
+  \vspace{-10pt}
+  \scshape\raggedright\large
+}{}{0em}{}[\titlerule
+\vspace{-5pt}
+]
+
+\ifPDFTeX\pdfgentounicode=1\fi
+
+% Custom commands
+\newcommand{\resumeItem}[1]{\item\small{#1 \vspace{-3pt}}}
+\newcommand{\resumeSubheading}[4]{%
+  \vspace{3pt}\item
+  \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+    \if\relax\detokenize{#1#2}\relax
+      % both empty → skip
+    \else
+      \textbf{#1} & #2 \\
+    \fi
+    \textit{\small #3} & \textit{\small #4} \\
+  \end{tabular*}\vspace{-4pt}
+}
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}
+}
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]\vspace{-2pt}}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
 
 \begin{document}
-{\Huge\bfseries Shaun Lalani}\hfill\par
-438-926-8091 \enspace\textbar\enspace
-\href{mailto:shaunlal@usc.edu}{shaunlal@usc.edu} \enspace\textbar\enspace
-\href{mailto:shaun.lalani@mail.mcgill.ca}{shaun.lalani@mail.mcgill.ca} \enspace\textbar\enspace
-\href{https://www.linkedin.com/in/shaun7036/}{linkedin.com/in/shaun7036}
 
-\resumesection{Education}
-\textbf{University of Southern California}\hfill Los Angeles, CA\par
-\textit{M.S. Analytics -- CGPA 3.85}\hfill Jan. 2026 -- Dec. 2027 (expected)\par
-\textbf{McGill University}\hfill Montreal, QC\par
-\textit{B.Eng. Electrical Engineering; Minor in Technological Entrepreneurship}\hfill Sept. 2017 -- May 2022
+%----------HEADING----------
 
-\resumesection{Experience}
-\textbf{Multidev Technologies Inc.}\hfill Montreal, QC\par
-\textit{Software Engineer}\hfill May 2023 -- Nov. 2025
-\begin{itemize}
-\item Led development of a multi-carrier shipping platform integrating Canada Post, FedEx, UPS, and USPS APIs with Laravel, Vue.js, MySQL, and Inertia, supporting thousands of monthly shipments.
-\item Migrated Google Cloud Docker Swarm infrastructure to AWS Lightsail and introduced GitHub Actions CI/CD, reducing deployment time from hours to minutes and increasing release frequency by 3x.
-\item Built event-driven Laravel, Redis, MySQL, and InterBase pipelines that reduced manual reconciliation by 90\%; background processing and caching improved shipping workflow performance by 70\%.
-\item Developed reusable UPS and FedEx carrier libraries and Chocolatey/ProGet package tooling for secure delivery and remote provisioning.
-\end{itemize}
-\textit{Junior Software Engineer}\hfill Jan. 2023 -- May 2023
-\begin{itemize}
-\item Built Python and Object Pascal tools for InterBase extraction, transformation, auditing, and visualization using Pandas and Seaborn.
-\item Improved query efficiency by 30\% through indexing and transaction handling; automated onboarding with Python, Jinja2, and Pandas, improving efficiency by 80\%.
-\end{itemize}
-\textit{Technical Analyst / QA Analyst}\hfill Jun. 2022 -- Dec. 2022
-\begin{itemize}
-\item Automated login and backup workflows with Python across InterBase, MySQL, and Firebird; supported POS/CRM clients and event load management.
-\end{itemize}
+\begin{center}
+    \textbf{\LARGE \scshape Shaun Lalani} \\ \vspace{1pt}
+    \small 438-926-8091 $|$ \href{mailto:shaunlal@usc.edu}{\underline{shaunlal@usc.edu}} $|$ \href{https://shaun7036.github.io/portfolio/}
+    %{\underline{shaun.lalani@mail.mcgill.ca}} $|$
+    {\underline{shaun7036.github.io/portfolio/}} $|$
+    \href{https://www.linkedin.com/in/shaun7036/}{\underline{www.linkedin.com/in/shaun7036/}}
+% $|$
+%     \href{https://github.com/...}{\underline{github.com/jake}}
+\end{center}
+\vspace{-10pt}
 
-\resumesection{Selected / Research}
-\textbf{USC Football Data Warehouse Project} \textit{| dbt, SQL, Python, Azure, Databricks}\hfill May 2026 -- Ongoing
-\begin{itemize}
-\item Design and implement an analytical warehouse ingesting PFF API data for data pipelines, dashboarding, and decision support.
-\end{itemize}
-\textbf{Modeling Attacking Sequences in Soccer} \textit{| Python, TensorFlow, OpenCV, Pandas, Snowflake}\hfill Jan. 2026 -- May 2026
-\begin{itemize}
-\item Transformed La Liga event data into an analytics database and implemented an ensemble decision-tree model to study attacking variables associated with high expected-goals output.
-\end{itemize}
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+      \resumeSubheading
+      {University of Southern California}{Los Angeles, CA}
+      {M. Sc in Analytics - CGPA 3.85}{Jan. 2026 -- Dec. 2027 (expected)}
+    \resumeSubheading
+      {McGill University}{Montreal, QC}
+      {B. Eng in Electrical Engineering; Minor in Technological Entrepreneurship}{Sept. 2017 -- May 2022}
+  \resumeSubHeadingListEnd
 
-\resumesection{Technical Skills}
-\textbf{Languages:} PHP, Python, Java, JavaScript, SQL, Object Pascal, Rust, Bash, PowerShell\par
-\textbf{Frameworks:} Laravel, Vue.js, React, Node.js, Express.js, Tailwind, PrimeVue\par
-\textbf{Cloud \& Data:} AWS, GCP, Azure, Docker, GitHub Actions, Snowflake, Databricks, BigQuery, dbt, Spark, Tableau\par
-\textbf{Observability:} Grafana, Loki, Alloy, ELK
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Multidev Technologies Inc.}{Montreal, QC}
+      {Software Engineer}{May 2023 -- Nov. 2025}
+
+      \resumeItemListStart
+        \resumeItem{Led development of a multi-carrier, cloud-native shipping platform integrating Canada Post, FedEx, UPS, and USPS APIs. Delivered RESTful services and responsive UIs with Laravel, Vue.js, MySQL, and Inertia, supporting thousands of shipments monthly.}
+        \resumeItem{Migrated infrastructure from Google Cloud Docker Swarm to AWS Lightsail, implementing containerized deployments and CI/CD pipelines with GitHub Actions. Reduced deployment time from hours to minutes and increased release frequency by 3x.}
+        \resumeItem{Architected event-driven ingestion pipelines with Laravel observers, Redis queues, and SMTP alerts to synchronize MySQL with Interbase SQL client databases. Improved data reliability and reduced manual reconciliation by 90\%.}
+        \resumeItem{Implemented asynchronous background job processing and caching for shipping queries, cutting API response latency and improving shipping workflow performance by 70\%.}
+        \resumeItem{Developed carrier integration libraries: a Composer-packaged UPS PHP library and a FedEx REST API wrapper, integrated into the shipping platform with GitHub Deploy pipelines for
+secure package delivery.}
+     %   \resumeItem{Integrated CRM and POS systems with the shipping platform, eliminating redundant data entry and reducing order-processing time for clients by 30\%.}
+        \resumeItem{Built a package manager application for microservices and binaries using Chocolatey and ProGet, automating deployments via PowerShell and APIs. Reduced infrastructure storage costs and streamlined remote provisioning.}
+        % \resumeItem{Deployed centralized log observability stack (Grafana, Loki, Alloy) to aggregate logs across applications and build analytics. }
+        % %Reduced mean time to resolution (MTTR) for incidents by 35\% and improved proactive monitoring.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+        {}{}
+      {Junior Software Engineer}{Jan. 2023 -- May 2023}
+      % {Multidev Technologies Inc.}{Montreal, QC}
+      \resumeItemListStart
+        \resumeItem{Built Python and Object Pascal GUI tools to extract, transform, and visualize Interbase RDBMS data using Pandas/Seaborn, enabling per-user auditing.}
+        %and saving 5+ hours of manual reporting per week.}
+        \resumeItem{Optimized ORM queries, SQL performance, and API routing across Laravel services via the implementation of indexing and transaction handling. Improved database query efficiency by ~30\% and reduced API response times.}
+        % \resumeItem{Wrote PHPUnit unit tests and validated endpoints via Postman, raising automated test coverage by 25\% and reducing regression bugs.}
+        \resumeItem{Developed a client on-boarding application using Python, Jinja2, and Pandas to translate client-side configuration setups into Laravel seeder files. Improved on-boarding efficiency by 80\% by reducing manual setup time and enabling faster adoption of the web platform.}
+      \resumeItemListEnd
+
+    % \resumeSubheading
+    %     {}{}
+    %   {Technical Analyst / QA Analyst}{Jun. 2022 -- Dec. 2022}
+    %   % {Multidev Technologies Inc.}{Montreal, QC}
+    %   \resumeItemListStart
+    %     \resumeItem{Automated daily workflows with Python scripts to support multi-platform logins and optimized backup management (Interbase, MySQL, Firebird). }
+    %     \resumeItem{ Worked on client success for POS & CRM systems clients like the Cleveland Guardians & Steve Madden. Build & maintained performance reports, dailies and assisted in load management during marquee events.}
+    %   \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+\vspace{4pt}
+% -----------PROJECTS-----------
+\section{Selected Projects/Research}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{USC Football Data Warehouse Project} $|$ \emph{dbt, SQL, Python, Azure, Databricks}}{May 2026 -- Ongoing}
+          \resumeItemListStart
+          \vspace{-3pt}
+            \resumeItem{Worked with the USC Football to design and implement an analytical data warehouse, ingesting data via PFF API, to enable analytical pipelines and data dashboarding using Power BI. Designed and implemented the cloud infrastructure as well.}
+            % \resumeItem{Designed & implemented Azure cloud infrastructure on Functions, Storage \& Databricks}
+          \resumeItemListEnd
+          \vspace{3pt}
+    % \resumeSubHeadingListEnd
+    % \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Modeling Attacking Sequences in Soccer} $|$ \emph{Python, TensorFlow/OpenCV, Snowflake}}{Jan 2026 -- May 2026}
+          \resumeItemListStart
+          \vspace{-3pt}
+            \resumeItem{Using historical data from La Liga, transformed and processed event data into an analytics database modeled to support offense decision making. Implemented an ensemble decision-tree model to infer key variables, which in an attack, result in high expected goals output. }
+          \resumeItemListEnd
+      \vspace{3pt}
+    % \resumeSubHeadingListEnd
+    % \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Cross Sport Player Scouter} $|$ \emph{Python, GitHub Actions, Ensemble linear regression models}}{May 2026 -- Ongoing}
+          \resumeItemListStart
+            \vspace{-3pt}
+            \resumeItem{Scraped seasonal data from NBA, NFL, PL, NHL data sources online. Conducted EDA and used clustering to identify role archetypes in these sports. Trained linear models for each role to predict next season percentile rank.}
+        \resumeItem{Used physical stats and feature engineered traits to infer how a player may perform in non-native sports. Deployed interactive model online for use.}
+          \resumeItemListEnd
+          \vspace{3pt}
+    \resumeSubHeadingListEnd
+
+
+
+
+% - Scraped data from four different sports; conducting eda and clustering to define player archetypes in each sport
+% - Trained a linear regression model for each role to predict next season percentile rank based on current stats and physical stats
+% - Used physical stats and engineered features like creativity to build an ensemble model which predicts how well a player from one sport may do in another sport.
+% - Used, uv, python & astro to deploy model to a static website which allows for interactive exploration of the tool automated via GitHub actions.
+
+\vspace{-10pt}
+%-----------SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: PHP, Python, Java, JavaScript, SQL, Object Pascal, Rust, Bash, PowerShell, } \\
+     \textbf{Frameworks}{: Laravel, Vue.js, React, Node.js, Express.js, Tailwind, PrimeVue} \\
+     \textbf{Cloud \& DevOps}{: AWS, GCP, Microsoft, Azure, Docker, GitHub Actions, Nginx, Apache2, ProGet, Chocolatey} \\
+     \textbf{Monitoring \& Observability}{: Grafana, Loki, Alloy, ELK (Elasticsearch, Logstash, Kibana)} \\
+     \textbf{Data Tools \& Analytics}{: Tableau, Snowflake, Pandas, NumPy, Seaborn, Selenium, OpenCV, Databricks, BigQuery, dbt, Apache Spark}
+    \\
+     \textbf{Relevant Coursework}{: Cloud Analytics, Fundamentals of Data Engineering, Reinforcement Learning \& Large-Scale Optimization, Predictive Analytics}
+
+
+    }}
+ \end{itemize}
+
 \end{document}

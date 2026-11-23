@@ -5,10 +5,9 @@ section: co-curricular
 start: "2026-01"
 end: present
 location: Los Angeles, CA
-description: Add a short description of the research questions, data, and responsibilities you own in this lab.
+description: Research details pending.
 responsibilities:
-  - Replace this prompt with one specific research or analytical responsibility.
-  - Add a verified method, deliverable, or finding without exposing private information.
+  - Research scope and contributions are not yet documented here.
 filterTags:
   roles:
     - Research Assistant

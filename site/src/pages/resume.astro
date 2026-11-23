@@ -15,12 +15,10 @@ const readableMonth = (value: string) => {
 };
 ---
 
-<BaseLayout title="Résumé" description="Choose a targeted résumé, preview it in the browser, or download the PDF and an editable LaTeX recreation.">
+<BaseLayout title="Résumé" description="Download or preview the sports, engineering, and full résumés.">
   <div class="page-shell resume-page-shell">
     <header class="page-intro resume-page-intro">
-      <p class="eyebrow">Choose the version that fits</p>
-      <h1>Experience, your way.</h1>
-      <p class="lede">Sports analytics, software and data engineering, or the broader history—each version is available to view and download.</p>
+      <h1>Résumé</h1>
     </header>
 
     <section class="resume-switcher" data-resume-tabs data-resume-default={defaultId} aria-label="Résumé versions">
@@ -71,15 +69,14 @@ const readableMonth = (value: string) => {
                 <div class="resume-version-actions" aria-label={`${version.label} résumé files`}>
                   <a class="button" href={pdfUrl} target="_blank" rel="noopener noreferrer">Open PDF <span aria-hidden="true">↗</span></a>
                   <a class="button button-secondary" href={pdfUrl} download>Download PDF <span aria-hidden="true">↓</span></a>
-                  {texUrl && <a class="button button-secondary" href={texUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${version.label} editable LaTeX recreation`}>Editable LaTeX <span aria-hidden="true">↗</span></a>}
-                  {texUrl && <a class="button button-secondary" href={texUrl} download aria-label={`Download ${version.label} editable LaTeX recreation`}>Download .tex <span aria-hidden="true">↓</span></a>}
+                  {texUrl && <a class="button button-secondary" href={texUrl} download aria-label={`Download ${version.label} LaTeX source`}>LaTeX source <span aria-hidden="true">↓</span></a>}
                 </div>
               </header>
 
               <p class:list={["resume-version-notice", version.status === "Older edition" && "is-archive"]}>
                 {version.notice}
               </p>
-              {texUrl && <p class="resume-source-note">The published PDF and editable LaTeX recreation are maintained separately; use the PDF as the visual reference.</p>}
+              {texUrl && version.id !== "sports" && <p class="resume-source-note">LaTeX recreation; the PDF is the visual reference.</p>}
 
               <div class="resume-file-frame" data-resume-frame>
                 <iframe

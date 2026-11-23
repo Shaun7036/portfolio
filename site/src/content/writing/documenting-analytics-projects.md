@@ -13,7 +13,7 @@ filterTags:
   experience:
     - Writing
 example: true
-draft: false
+draft: true
 ---
 
 A project page should help a reader understand the work without having to open every notebook. The detail can live in the repository; the page provides a clear route through it.

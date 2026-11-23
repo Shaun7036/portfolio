@@ -1,12 +1,14 @@
 ---
-title: Cross Sport Scouter
-description: I was thinking about Remco Evencopool a while back, a former soccer youth player who ended up becoming olympic cyclist after changing sports. It made me wonder, if it possible to build a half-decent cross-sport scouter?.
-highlight: "A scouting tool which can be used to identify players who could succeed in other sports."
+title: Cross Sport Player Scouter
+description: An interactive model that identifies player roles, predicts next-season rankings, and explores performance across sports.
+highlight: "Player archetypes · Cross-sport modeling"
 category: Sports Analytics
 tools:
-  - Astro Web Framework
-  - Github Pages
-  - Python []
+  - Python
+  - GitHub Actions
+  - Linear regression
+  - Astro
+  - GitHub Pages
 filterTags:
   roles:
     - Sports Analyst
@@ -17,39 +19,30 @@ filterTags:
     - DevOps
   experience:
     - Project
-year: 2026
+year: "2026–Present"
 order: 1
 featured: true
 chart: revenue
-example: true
-outcome: "Example deliverable: an executive dashboard and a documented set of revenue metrics."
-role: Your role in this project
-duration: Add project duration
-dataset: Add the source, scope, and license of your data
+example: false
+draft: false
+outcome: "An interactive scouting model with role-based ranking predictions and cross-sport estimates."
+role: Sports analytics and modeling
+duration: May 2026 – Present
+dataset: Seasonal NBA, NFL, PL, and NHL player data
 repository: ""
 dashboard: ""
 ---
 
-## Business question
+## Question
 
-Which products, regions, or customer groups explain a change in revenue? Replace this question with the decision your analysis supported and name its intended audience.
-
-## Data & preparation
-
-Describe the actual source, reporting period, and unit of analysis. Explain how you handled returns, missing records, duplicate transactions, and differences in currency or time zones.
+Can player statistics and physical traits help estimate how someone might perform in another sport?
 
 ## Approach
 
-Define revenue and any comparison metrics before presenting the dashboard. Outline your data model, validation checks, and the path from a high-level trend to a more detailed explanation.
+I scraped seasonal player data from NBA, NFL, PL, and NHL sources, explored the data, and used clustering to identify role archetypes. I then trained linear models for each role to predict next-season percentile rankings.
 
-## Findings
+Physical statistics and engineered features support estimates of how players might perform outside their usual sport.
 
-Add two or three observations supported by your completed analysis. Include a chart, the comparison period, and any relevant uncertainty. The graphic on this example page is illustrative and does not represent measured results.
+## Output
 
-## Recommendation
-
-Connect each finding to a practical action. Distinguish recommendations from actions that were taken, and only report business impact when you can substantiate it.
-
-## Limitations
-
-State what the data cannot explain, such as profitability, seasonality, or changes in customer mix. Document any reporting exclusions so the reader can judge the result.
+I deployed an interactive model for exploring these estimates. Development is ongoing; cross-sport predictions are exploratory, not observed player outcomes.

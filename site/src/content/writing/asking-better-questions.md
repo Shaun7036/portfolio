@@ -13,7 +13,7 @@ filterTags:
   experience:
     - Writing
 example: true
-draft: false
+draft: true
 ---
 
 An analysis is easier to judge when its question is clear. “Explore sales” describes an activity. “Which change best explains the difference in sales between these two periods?” gives the work a direction.

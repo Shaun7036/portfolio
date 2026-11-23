@@ -9,8 +9,9 @@
     "start": "npm run dev",
     "check:astro": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check",
     "build": "npm run data && npm run check:astro && cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
-    "check": "npm run build && node ../scripts/check-site.mjs dist",
-    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview"
+    "check": "npm run check:editor && npm run build && node ../scripts/check-site.mjs dist",
+    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview",
+    "check:editor": "node --test ../scripts/editor-generator.test.mjs"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",

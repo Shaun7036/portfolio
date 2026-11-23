@@ -184,7 +184,12 @@ if (resumeSwitcher) {
     });
 
     const activateFromHash = () => {
-      const hashId = decodeURIComponent(window.location.hash.slice(1));
+      let hashId = '';
+      try {
+        hashId = decodeURIComponent(window.location.hash.slice(1));
+      } catch {
+        // Malformed fragments should fall back to the default résumé.
+      }
       const matchingTab = tabs.find(tab => tab.getAttribute('aria-controls') === hashId);
       const defaultTab = tabs.find(tab => tab.getAttribute('aria-controls') === `resume-${resumeSwitcher.dataset.resumeDefault}`);
       activate(matchingTab || defaultTab || tabs[0]);

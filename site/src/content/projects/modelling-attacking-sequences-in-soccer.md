@@ -1,7 +1,7 @@
 ---
 title: Modeling Attacking Sequences in Soccer
-description: Transforming historical La Liga event data into an analytics database and model for studying high-expected-goals attacking patterns.
-highlight: "Attacking sequences modeled from event data"
+description: An analytics database and ensemble decision-tree model for studying attacking patterns in historical La Liga event data.
+highlight: "La Liga event data · Predictive analytics"
 category: Sports Analytics
 tools:
   - Python
@@ -28,7 +28,7 @@ featured: true
 chart: mobility
 example: false
 draft: false
-outcome: "An analytics database and ensemble decision-tree model for investigating attacking patterns associated with high expected-goals output."
+outcome: "An analytics database and ensemble decision-tree model for studying expected-goals patterns."
 role: Sports analytics researcher
 duration: January 2026 – May 2026
 dataset: Historical La Liga event data
@@ -38,20 +38,14 @@ dashboard: ""
 
 ## Research question
 
-Which features of an attacking sequence are associated with higher expected-goals output? The project approaches that question by turning event-level match data into a consistent analytical representation of possession and attacking behavior.
+Which features of an attacking sequence are associated with higher expected-goals output?
 
-## Data preparation
+## Approach
 
-Historical La Liga event data was transformed and processed into an analytics database. Python and Pandas supported the data workflow, while Snowflake provided a structured environment for analysis. OpenCV and TensorFlow were part of the broader modeling toolkit.
+I transformed historical La Liga event data into an analytics database to support offensive decision-making, using Python and Snowflake for the data workflow.
 
-## Modeling approach
+I implemented an ensemble decision-tree model to investigate which variables in an attacking sequence are associated with higher expected-goals output.
 
-I implemented an ensemble decision-tree model to identify variables within attacking sequences that are useful for distinguishing higher-expected-goals outcomes. The goal was analytical interpretation and pattern discovery, not a claim that the model establishes causal effects.
+## Scope
 
-## Output
-
-The project produced an analysis-ready database and a modeling workflow that can be used to compare sequence characteristics, surface candidate drivers, and frame better questions for offensive decision-making.
-
-## Limitations
-
-Results depend on event-data coverage, feature definitions, sample construction, and model assumptions. Associations should be validated across competitions and seasons before being treated as general tactical guidance.
+The project produced a database and modeling workflow for examining attacking patterns. It studies associations in historical event data rather than establishing causal effects.

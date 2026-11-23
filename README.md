@@ -2,7 +2,7 @@
 
 A fast, static analytics portfolio built with Astro and supported by small Python content tools. Astro renders the website to plain HTML, CSS, and JavaScript; Python validates the content and scaffolds new projects, experience entries, or articles. GitHub Pages serves the generated files without a database or application server.
 
-The site still contains clearly labeled starter project, experience, and writing copy. Review those entries before using the portfolio in applications.
+The current sports résumé supplies the recent sports projects, education, and Multidev experience. Existing co-curricular entries remain in place; unfinished role details are marked as pending. Starter articles are kept as drafts.
 
 ## Stack
 
@@ -58,7 +58,9 @@ The second Astro check simulates a GitHub project site. Generated files live in 
 
 Start with the [personalization checklist](docs/personalization-checklist.md), then use the [content guide](docs/content-guide.md). The [engineering guide](docs/engineering-guide.md) explains the architecture, debugging workflow, and safe customization points.
 
-Create draft content without copying files manually:
+For a form-based workflow, open **About → Add an entry**. Choose Project, Work experience, Co-curricular, or Article, complete the form, and download the generated Markdown file. Drafts are saved only in that browser. Place the file in the folder shown by the editor, then validate, commit, and push to publish. The static editor does not upload or publish anything itself. See [the editor guide](docs/editor-guide.md).
+
+You can also create draft content from the command line:
 
 ```sh
 uv run portfolio-content --root . new project forecasting-demand

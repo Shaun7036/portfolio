@@ -60,7 +60,7 @@ Project, experience, and article detail routes are dynamic at source but static 
 
 ## Layout and component flow
 
-`BaseLayout.astro` owns the document `<head>`, metadata, skip link, header, navigation, footer, global CSS, and browser script. Every public page should use it.
+`BaseLayout.astro` owns the document `<head>`, metadata, skip link, header, navigation, footer, global CSS, and browser script. Every public page should use it. Its `noindex` property adds a robots meta tag for the entry editor; this is a search preference, not access control.
 
 `ProjectLayout.astro`, `ExperienceLayout.astro`, and `PostLayout.astro` wrap rendered Markdown. `ProjectCard.astro` renders the same project metadata on the home page and project archive. `ExperienceCard.astro` renders the native expandable cards used by both experience grids. `ProjectVisual.astro` owns the three lightweight fallback illustrations.
 
@@ -126,7 +126,7 @@ Edit `site/src/data/site.json`. Use exactly one primary `email`; place additiona
 
 ### Add a résumé version
 
-Copy the PDF and optional editable `.tex` recreation to `site/public/assets/resume/`, then add one entry to `site/src/data/resumes.json`. Published entries require an existing PDF, unique ID, review month, and notice. Set `draft: true` while preparing a version. The PDF is the published visual reference; the build intentionally does not compile LaTeX or assert that the `.tex` recreation reproduces it exactly.
+Copy the PDF and optional editable `.tex` recreation to `site/public/assets/resume/`, then add one entry to `site/src/data/resumes.json`. Published entries require an existing PDF, unique ID, review month, and notice. Set `draft: true` while preparing a version. The PDF is the published visual reference; the build intentionally does not compile LaTeX or assert that the source reproduces it exactly. Sports uses the supplied source, while the other versions use recreations.
 
 ### Add a new page
 
@@ -190,3 +190,7 @@ Reproduce the exact commands in `.github/workflows/check.yml`, verify committed 
 - Pull requests test Python plus root and prefixed Astro builds.
 - Pushes to `main` deploy only after validation and generated-site checks pass.
 - The deploy artifact is `site/dist/`; source and dependencies are never served.
+
+## Entry editor
+
+The `/editor/` hub and four form pages are static Astro routes. Only these pages load the editor script and stylesheet. Forms export collection-compatible Markdown and store drafts in localStorage, with no server, tokens, or third-party requests. Publication still uses the normal Git workflow. Keep the editor generator and round-trip tests aligned with both content schemas when adding fields. See [the editor guide](editor-guide.md).

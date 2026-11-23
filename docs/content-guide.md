@@ -2,11 +2,15 @@
 
 ## Profile, experience, and credentials
 
-Edit `site/src/data/site.json` without renaming its fields. `email` is the primary address used in the footer and contact page. Put additional addresses in `alternateEmails`; the contact page renders each address as a separate valid link. Résumé contact details live in each PDF and editable LaTeX recreation, so update those separately. The `facts` array supplies the first three home-page facts, status combines `availability` and `location`, and `storytime` introduces the professional experience grid.
+Edit `site/src/data/site.json` without renaming its fields. `email` is the primary address used in the footer and contact page. Put additional addresses in `alternateEmails`; the contact page renders each address as a separate valid link. Résumé contact details live in each PDF and editable LaTeX recreation, so update those separately. The `facts` array supplies the first three home-page facts, status combines `availability` and `location`, and `storytime` is retained for compatibility but is no longer displayed.
 
 Edit `site/src/data/credentials.json` for education, certifications, and professional development. Remove `example: true` after an entry is accurate. Work and co-curricular roles live in `site/src/content/experiences/` so the expandable card and any optional detail page share one source of truth.
 
 JSON requires double quotes and forbids trailing commas. Run `uv run portfolio-content --root . validate` after changing shared data.
+
+## Use the entry forms
+
+Open **About → Add an entry** for project, work, co-curricular, and article templates. The editor saves a browser-local draft and generates the same Markdown format used by the content collections. Download the file, add it to the folder shown, and commit and push after reviewing the preview. No submission reaches a server. The link is discreet but public, not a private admin login. See [the editor guide](editor-guide.md).
 
 ## Add an experience
 
@@ -133,7 +137,7 @@ PDFs and editable LaTeX recreations live in `site/public/assets/resume/`. The re
 
 To add a version, place the PDF and optional `.tex` recreation in that directory, add one registry object, and run validation. To change the default tab, update only the top-level `default` value. Keep IDs and filenames stable after sharing links.
 
-The supplied PDFs are the published visual references. Their `.tex` companions are editable recreations maintained separately, so compiling one is not guaranteed to reproduce the supplied PDF byte-for-byte or layout-for-layout. When you revise a version, compile the `.tex` file locally or in Overleaf, replace the matching PDF, update both files together, change `updated`, and review the browser preview and direct download. The build validates that assets exist but does not compile LaTeX.
+The Sports version uses the supplied November 2026 PDF and actual LaTeX source. Its three PDF link targets were repaired while preserving the supplied page appearance. The source also has link, spelling, and compiler-compatibility corrections; it compiles with the built-in editor. The Engineering and Full `.tex` files remain editable recreations. Compiling sources is not guaranteed to reproduce the supplied PDFs byte-for-byte or layout-for-layout. When you revise a version, compile the `.tex` file locally or in Overleaf, replace the matching PDF, update both files together, change `updated`, and review the browser preview and direct download. The build validates that assets exist but does not compile LaTeX.
 
 Set `site.url` to the published origin only, such as `https://your-name.github.io`, when known. The current Pages path is supplied separately by Astro's base configuration.
 

@@ -27,7 +27,7 @@ const projectUrl = withBase(`/projects/${project.id}/`);
     <div class="project-card-art" aria-hidden="true">
       {data.cover
         ? <img class="project-cover-image" src={withBase(data.cover)} alt="" loading="lazy" decoding="async" width={data.coverWidth} height={data.coverHeight} />
-        : <ProjectVisual type={data.chart} title={data.title} />}
+        : data.example ? <ProjectVisual type={data.chart} title={data.title} /> : <svg class="project-abstract" viewBox="0 0 400 450" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="currentColor" stroke-width="1"><path opacity=".22" d="M30 60H370M30 110H370M30 160H370M30 210H370M30 260H370M30 310H370M30 360H370M60 30V400M120 30V400M180 30V400M240 30V400M300 30V400M360 30V400" /><path stroke-width="2" d="M30 270C82 258 88 165 148 195S233 150 267 102S322 155 370 45" /></g><g fill="currentColor"><circle cx="50" cy="240" r="4"/><circle cx="103" cy="210" r="5"/><circle cx="156" cy="179" r="4"/><circle cx="200" cy="166" r="6"/><circle cx="261" cy="125" r="4"/><circle cx="317" cy="112" r="4"/><circle cx="358" cy="69" r="6"/></g></svg>}
     </div>
     <div class="project-card-overlay">
       <div class="project-card-top"><span>[{number}] {data.category}</span>{data.example && <span class="sample-label">Example project</span>}</div>

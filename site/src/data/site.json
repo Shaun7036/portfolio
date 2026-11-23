@@ -1,25 +1,25 @@
 {
   "name": "Shaun Lalani",
   "role": "Analytics & Software Engineering",
-  "description": "An analytics portfolio featuring selected projects, practical data stories, credentials, and professional experience.",
-  "intro": "hi!i'm a former software engineer turned analytics engineer! i like turning raw data into actionable decisions & cool tooling!",
+  "description": "Shaun Lalani's work in sports analytics, data engineering, and software development.",
+  "intro": "I'm an analytics graduate student at USC and a former software engineer at Multidev Technologies. I build data pipelines, analytical tools, and sports models.",
   "location": "Los Angeles, CA + Montreal, QC",
   "availability": "Open to opportunities: Full-time [Dec 2027], Internships [Summer 2027]",
   "facts": [
     {
       "number": "01",
       "label": "interests",
-      "value": "Sports Analytics · ML/AI Operations · Data Engineering · Analytical Engineering"
+      "value": "Sports Analytics · ML/AI Operations · Data Engineering · Analytics Engineering"
     },
     {
       "number": "02",
       "label": "toolkit",
-      "value": "SQL · Python · Tableau / Power BI · Snowflake Databricks · dbt · GCP, Azure, AWS"
+      "value": "SQL · Python · dbt · Snowflake · Databricks · Power BI / Tableau · AWS / Azure / GCP"
     },
     {
       "number": "03",
       "label": "coursework",
-      "value": "Large Scale Optimization & Learning · Predictive Analytics · Data Engineering Fundamentals · Cloud Analytics"
+      "value": "Cloud Analytics · Fundamentals of Data Engineering · Reinforcement Learning & Large-Scale Optimization · Predictive Analytics"
     }
   ],
   "email": "lalani.shaun@gmail.com",
@@ -28,7 +28,7 @@
     "shaun.lalani@mail.mcgill.ca"
   ],
   "github": "https://github.com/Shaun7036",
-  "linkedin": "https://www.linkedin.com/in/shaun7036/?isSelfProfile=true",
+  "linkedin": "https://www.linkedin.com/in/shaun7036/",
   "url": "",
-  "storytime": "storytime: i graduated as a electrical engineer but then after a bad fit at my first job, i transitioned to a technical/qa analyst role. i started to scripting and working with data, eventually moving to a software engineering role at my tech firm where i had an amazing mentor and tons of opportunities to work across the software landscape! i'm now back in school, working on my data and statistical knowledge so i can apply it to the areas of sports & climate"
+  "storytime": "Software engineering at Multidev Technologies, followed by graduate study in analytics at USC."
 }
