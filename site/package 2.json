@@ -1,0 +1,21 @@
+{
+  "name": "shaun-lalani-portfolio-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "data": "uv run --project .. portfolio-content --root .. validate",
+    "dev": "npm run data && cross-env ASTRO_TELEMETRY_DISABLED=1 astro dev",
+    "start": "npm run dev",
+    "check:astro": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "build": "npm run data && npm run check:astro && cross-env ASTRO_TELEMETRY_DISABLED=1 astro build",
+    "check": "npm run build && node ../scripts/check-site.mjs dist",
+    "preview": "cross-env ASTRO_TELEMETRY_DISABLED=1 astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "astro": "7.4.2",
+    "cross-env": "10.1.0",
+    "typescript": "6.0.3"
+  }
+}

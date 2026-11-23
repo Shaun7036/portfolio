@@ -1,0 +1,107 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBase } from "../../lib/urls";
+import { editorKinds, getEditorGroups } from "../../scripts/editor-model.js";
+import "../../styles/editor.css";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+  const experiences = await getCollection("experiences");
+  const writing = await getCollection("writing");
+  return Object.keys(editorKinds).map((kind) => {
+    const entries = kind === "project" ? projects : kind === "article" ? writing : experiences;
+    const usedOrders = kind === "article" ? [] : entries.map((entry) => "order" in entry.data ? entry.data.order : 0);
+    return { params: { kind }, props: { kind, nextOrder: Math.max(0, ...usedOrders) + 1, usedOrders, existingSlugs: entries.map((entry) => entry.id) } };
+  });
+}
+
+interface Field {
+  name: string; label: string; control: string; type?: "text" | "url" | "number" | "date" | "month"; required?: boolean;
+  rows?: number; help?: string; placeholder?: string; min?: number;
+  options?: { value: string; label: string }[];
+}
+interface Group { title: string; help?: string; optional?: boolean; fields: Field[] }
+const { kind, nextOrder, usedOrders, existingSlugs } = Astro.props;
+const definition = editorKinds[kind as keyof typeof editorKinds];
+const groups = getEditorGroups(kind) as Group[];
+const config = { kind, nextOrder, usedOrders, existingSlugs, scope: withBase("/editor/") };
+---
+
+<BaseLayout title={`New ${definition.label.toLowerCase()}`} description={`Prepare a ${definition.label.toLowerCase()} entry for the portfolio.`} noindex>
+  <div class="page-shell editor-shell" data-entry-editor data-editor-config={JSON.stringify(config)}>
+    <header class="page-intro editor-intro">
+      <a class="back-link" href={withBase("/editor/")}><span aria-hidden="true">←</span> All templates</a>
+      <p class="eyebrow">Portfolio editor</p>
+      <h1>Add {kind === "article" ? "an article" : kind === "project" ? "a project" : definition.label.toLowerCase()}.</h1>
+      <p class="lede">{definition.description} Fill in the fields, preview the entry, then copy or download it.</p>
+    </header>
+
+    <nav class="editor-kind-nav" aria-label="Entry templates">
+      {Object.entries(editorKinds).map(([key, item]) => <a href={withBase(`/editor/${key}/`)} aria-current={kind === key ? "page" : undefined}>{item.label}</a>)}
+    </nav>
+
+    <div class="editor-file-bar">
+      <div><span class="section-label">File destination</span><code data-editor-destination>site/src/content/{definition.collection}/your-file-name.md</code></div>
+      <span class="editor-unpublished">Not yet published</span>
+    </div>
+    <p class="editor-note">Changes stay in this browser. Download the file and add it to the folder above to update the repository. This public editor is not a sign-in page.</p>
+    <p data-editor-loading class="editor-note">Loading the editor…</p>
+    <noscript><p class="editor-error-summary">This form needs JavaScript to preview and create files. You can also use the Markdown templates in the repository's templates folder.</p></noscript>
+
+    <form data-editor-form novalidate hidden>
+      <div class="editor-error-summary" data-editor-errors role="alert" tabindex="-1" hidden>
+        <h2>Check a few details.</h2>
+        <ul data-editor-error-list></ul>
+      </div>
+      <div class="editor-form-layout">
+        <div class="editor-fields">
+          {groups.map((group) => {
+            const Wrapper = group.optional ? "details" : "section";
+            const Heading = group.optional ? "summary" : "h2";
+            return <Wrapper class="editor-group">
+              <Heading class="editor-group-title">{group.title}{group.optional && <span>Optional</span>}</Heading>
+              {group.help && <p class="editor-field-help editor-group-help">{group.help}</p>}
+              <div class="editor-field-grid">
+                {group.fields.map((field) => <div class:list={["editor-field", { "editor-field-wide": field.control === "textarea" || field.control === "checkbox", "editor-field-check": field.control === "checkbox" }]}>
+                  {field.control === "checkbox" ? <label class="editor-check-label" for={`editor-${field.name}`}><input id={`editor-${field.name}`} name={field.name} type="checkbox" aria-describedby={`editor-${field.name}-help editor-${field.name}-error`} /><span>{field.label}</span></label> : <>
+                    <label for={`editor-${field.name}`}>{field.label}{field.required && <span class="editor-required"> Required</span>}</label>
+                    {field.control === "textarea" ? <textarea id={`editor-${field.name}`} name={field.name} rows={field.rows || 3} required={field.required} placeholder={field.placeholder} aria-describedby={`editor-${field.name}-help editor-${field.name}-error`}></textarea> : field.control === "select" ? <select id={`editor-${field.name}`} name={field.name} aria-describedby={`editor-${field.name}-help editor-${field.name}-error`}>{field.options?.map((option) => <option value={option.value}>{option.label}</option>)}</select> : <input id={`editor-${field.name}`} name={field.name} type={field.type || "text"} required={field.required} placeholder={field.placeholder} min={field.min} step={field.type === "number" ? "1" : undefined} autocomplete="off" aria-describedby={`editor-${field.name}-help editor-${field.name}-error`} />}
+                  </>}
+                  <p id={`editor-${field.name}-help`} class="editor-field-help">{field.help}</p>
+                  <p id={`editor-${field.name}-error`} class="editor-field-error" data-editor-error-for={field.name}></p>
+                </div>)}
+              </div>
+            </Wrapper>;
+          })}
+        </div>
+        <aside class="editor-actions" aria-label="Save and export this entry">
+          <p class="section-label">Make it a file</p>
+          <p class="editor-save-status" data-editor-save-status role="status">Your changes will be saved in this browser.</p>
+          <button class="button" type="submit">Preview entry <span aria-hidden="true">↓</span></button>
+          <button class="button button-secondary" type="button" data-editor-download>Download .md</button>
+          <button class="button button-secondary" type="button" data-editor-copy>Copy Markdown</button>
+          <p class="editor-action-status" data-editor-action-status role="status"></p>
+          <button class="editor-reset" type="button" data-editor-reset>Start a new entry</button>
+          {kind !== "article" && <p class="editor-field-help">Suggested order: {nextOrder}. If you create several entries before rebuilding the site, give each a new number. Work and co-curricular entries share one sequence.</p>}
+          <p class="editor-field-help">Drafts are stored separately for each template. Download a copy to keep it beyond this browser.</p>
+        </aside>
+      </div>
+    </form>
+
+    <section class="editor-preview" data-editor-preview tabindex="-1" aria-labelledby="editor-preview-title" hidden>
+      <div class="section-heading"><div><p class="eyebrow">Before it goes into the repository</p><h2 id="editor-preview-title">Preview.</h2></div></div>
+      <p class="editor-note">A text preview of your content. Markdown and HTML are shown as text here; the site applies the final layout after you add the file.</p>
+      <p data-editor-stale class="editor-stale" hidden>Your form has changed. Preview again to see the latest version; copying or downloading always uses the current fields.</p>
+      <div class="editor-preview-content" data-editor-preview-content></div>
+      <details class="editor-source" data-editor-source-details><summary>View the Markdown file</summary><label for="editor-markdown-source" class="editor-field-help">Ready-to-save file contents</label><textarea id="editor-markdown-source" data-editor-source readonly rows="18" spellcheck="false"></textarea></details>
+    </section>
+    <section class="editor-next-steps" aria-labelledby="editor-next-title">
+      <h2 id="editor-next-title">When the file is ready.</h2>
+      <p>Move it into the destination folder, check the site locally, and review the result. Turn off draft status when it is ready to appear, then commit and push. Downloading a file does not change the live portfolio.</p>
+    </section>
+  </div>
+  <script>
+    import "../../scripts/editor.js";
+  </script>
+</BaseLayout>

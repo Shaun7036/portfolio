@@ -1,0 +1,21 @@
+---
+import ProjectCard from "../../components/ProjectCard.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPublishedProjects, pad, projectCategories } from "../../lib/content";
+
+const projects = await getPublishedProjects();
+const categories = projectCategories(projects);
+---
+
+<BaseLayout title="Projects" description="Selected analytics projects, from business questions and data preparation to findings and recommendations.">
+  <div class="page-shell">
+    <header class="page-intro"><p class="eyebrow">the archive / selected work</p><h1>all the work, documented.</h1><p class="lede">A collection of analyses, dashboards, and data stories. Each case study connects the question to the method, the evidence, and the next useful step.</p></header>
+    <section class="project-list-section" aria-labelledby="project-list-title" data-project-list>
+      <h2 id="project-list-title" class="section-label">Project collection</h2>
+      <div class="project-toolbar" data-filter-controls hidden><div class="filter-list" role="group" aria-label="Filter projects by category"><button type="button" class="filter-button" data-filter="all" aria-pressed="true">All work</button>{categories.map((category) => <button type="button" class="filter-button" data-filter={category} aria-pressed="false">{category}</button>)}</div><p class="filter-count" data-filter-count aria-live="polite" aria-atomic="true">{projects.length} projects</p></div>
+      {projects.some((project) => project.data.example) && <p class="section-note">These are clearly labeled examples to show how your work will look.</p>}
+      <div class="project-grid project-grid-all">{projects.map((project, index) => <ProjectCard project={project} number={pad(index + 1)} />)}</div>
+      {projects.length === 0 && <p class="empty-state">New projects are on the way.</p>}
+    </section>
+  </div>
+</BaseLayout>

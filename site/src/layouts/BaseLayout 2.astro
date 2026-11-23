@@ -1,0 +1,86 @@
+---
+import site from "../data/site.json";
+import { isSection, withBase } from "../lib/urls";
+import "../styles/site.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  bodyClass?: string;
+  pageType?: "website" | "article";
+}
+
+const {
+  title,
+  description = site.description,
+  bodyClass = "",
+  pageType = "website",
+} = Astro.props;
+const pageTitle = title ? `${title} · ${site.name} — ${site.role}` : `${site.name} — ${site.role}`;
+const socialTitle = title ? `${title} · ${site.role}` : `${site.name} · ${site.role}`;
+const canonical = site.url ? new URL(Astro.url.pathname, site.url).toString() : undefined;
+const buildYear = new Date().getUTCFullYear();
+const links = [
+  { label: "work", url: "/projects/" },
+  { label: "about", url: "/about/" },
+  { label: "writing", url: "/writing/" },
+  { label: "résumé", url: "/resume/" },
+  { label: "contact", url: "/contact/" },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#fbfaf7" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={socialTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={pageType} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {canonical && <meta property="og:url" content={canonical} />}
+    <link rel="icon" href={withBase("/assets/favicon.svg")} type="image/svg+xml" />
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header page-shell">
+      <a class="brand" href={withBase("/")} aria-label={`${site.name} home`}>
+        <span>{site.name}</span><b aria-hidden="true">.</b><small>{site.role}</small>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        {links.map((link) => (
+          <a href={withBase(link.url)} aria-current={isSection(Astro.url.pathname, link.url) ? "page" : undefined}>
+            {link.label}{(link.label === "résumé" || link.label === "contact") && <span aria-hidden="true"> ↗</span>}
+          </a>
+        ))}
+      </nav>
+    </header>
+    <main id="main" tabindex="-1"><slot /></main>
+    <footer class="site-footer page-shell">
+      <div class="footer-invitation">
+        <p>say hello<span aria-hidden="true">.</span></p>
+        {site.email
+          ? <a href={`mailto:${site.email}`}>{site.email} <span aria-hidden="true">↗</span></a>
+          : <a href={withBase("/contact/")}>start a conversation <span aria-hidden="true">↗</span></a>}
+      </div>
+      <div class="footer-columns">
+        <nav aria-label="Explore the portfolio"><span>explore</span><a href={withBase("/projects/")}>projects</a><a href={withBase("/about/")}>about me</a><a href={withBase("/writing/")}>writing</a></nav>
+        <nav aria-label="Professional links"><span>details</span><a href={withBase("/credentials/")}>credentials</a><a href={withBase("/resume/")}>résumé</a><a href={withBase("/contact/")}>contact</a></nav>
+        <nav aria-label="Find me online">
+          <span>find me</span>
+          {site.linkedin && <a href={site.linkedin} target="_blank" rel="noopener noreferrer">linkedin ↗</a>}
+          {site.github && <a href={site.github} target="_blank" rel="noopener noreferrer">github ↗</a>}
+          {!site.linkedin && !site.github && <a href={withBase("/contact/")}>links coming soon</a>}
+        </nav>
+      </div>
+      <div class="footer-base"><a class="footer-name" href={withBase("/")}>{site.name}.</a><span class="copyright">© {buildYear} · built as a fast static site</span></div>
+    </footer>
+    <script>
+      import "../scripts/site.js";
+    </script>
+  </body>
+</html>

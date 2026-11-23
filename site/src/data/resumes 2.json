@@ -1,0 +1,41 @@
+{
+  "default": "sports",
+  "versions": [
+    {
+      "id": "sports",
+      "label": "Sports",
+      "title": "Sports & Analytics Résumé",
+      "description": "A focused one-page résumé for sports analytics, analytics engineering, and research opportunities.",
+      "status": "Current",
+      "updated": "2026-10",
+      "pdf": "/assets/resume/sports-resume.pdf",
+      "tex": "/assets/resume/sports-resume.tex",
+      "notice": "This is the current targeted version and the canonical source for education dates, recent projects, and analytics tooling.",
+      "draft": false
+    },
+    {
+      "id": "engineering",
+      "label": "Engineering",
+      "title": "Software & Data Engineering Résumé",
+      "description": "A one-page version emphasizing production software, data pipelines, infrastructure, integrations, and observability.",
+      "status": "Current",
+      "updated": "2026-11",
+      "pdf": "/assets/resume/engineering-resume.pdf",
+      "tex": "/assets/resume/engineering-resume.tex",
+      "notice": "This version uses the newer employment dates and keeps full-résumé-only quantitative claims out until they are reviewed.",
+      "draft": false
+    },
+    {
+      "id": "full",
+      "label": "Full",
+      "title": "Full Experience Résumé",
+      "description": "A broader two-page history covering engineering work, earlier projects, writing, volunteering, and student involvement.",
+      "status": "Older edition",
+      "updated": "2026-11",
+      "pdf": "/assets/resume/full-resume.pdf",
+      "tex": "/assets/resume/full-resume.tex",
+      "notice": "This is an older, broader edition. Use the Sports or Engineering version for the most current dates and targeted emphasis.",
+      "draft": false
+    }
+  ]
+}

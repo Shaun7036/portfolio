@@ -1,0 +1,192 @@
+# Engineering guide
+
+This document explains how the portfolio works, where to make changes, and how to debug it without treating the project as a black box.
+
+## System model
+
+```text
+JSON profile data ───────┐
+Markdown collections ───┼─> Python validation ─> Astro build ─> site/dist/ ─> GitHub Pages
+Astro pages/components ─┤
+CSS + small browser JS ─┘
+```
+
+There is no production Python or Node server. Python and Node run during development and CI; visitors receive static files.
+
+## Repository layout
+
+```text
+portfolio/
+├── pyproject.toml, uv.lock       Python tooling and locked environment
+├── src/portfolio_tools/          validator and content scaffolder
+├── tests/                        Python tests
+├── site/                         Astro application
+│   ├── astro.config.mjs          static output and base-path configuration
+│   ├── src/content.config.ts     frontmatter schemas
+│   ├── src/content/              projects, experience, and writing
+│   ├── src/data/                 shared JSON
+│   ├── src/pages/                URL-producing pages
+│   ├── src/layouts/              shared page shells
+│   ├── src/components/           reusable project visuals/cards
+│   ├── src/lib/                  URL and collection helpers
+│   ├── src/styles/site.css       global design system
+│   ├── src/scripts/site.js       progressive project filtering
+│   └── public/                   copied static files
+├── scripts/check-site.mjs        generated-HTML/link checker
+├── templates/                    draft Markdown templates
+└── .github/workflows/            pull-request checks and Pages deployment
+```
+
+## What happens during a build
+
+1. `npm run build` in `site/` calls the Python validator through `uv`.
+2. `astro check` type-checks Astro components and validates collection frontmatter against `content.config.ts`.
+3. `astro build` resolves every page and dynamic route to static files in `site/dist/`.
+4. `scripts/check-site.mjs` reads the generated HTML, checks required routes/headings/titles/IDs/alt text, and verifies local links and fragments.
+
+The Python validator covers repository-level rules that are awkward in a component schema: valid primary/alternate emails, three profile facts, unique project order, safe slugs, required Markdown fields, and the résumé registry's IDs, default, dates, and PDF/LaTeX assets.
+
+## Routing and content collections
+
+Files in `site/src/pages/` create routes. For example, `about.astro` becomes `/about/`, while Astro's special `404.astro` becomes `/404.html`.
+
+Project, experience, and article detail routes are dynamic at source but static after the build:
+
+- `pages/projects/[slug].astro` loads every non-draft project and emits `/projects/<filename>/`.
+- `pages/experience/[slug].astro` emits a page only for non-draft entries with `detailPage: true`.
+- `pages/writing/[slug].astro` does the same for articles.
+
+`lib/content.ts` is the single place for collection ordering and filtering. Projects and experience entries sort by `order`; posts sort newest first. Drafts are filtered before route generation, so they cannot leak into the generated site.
+
+## Layout and component flow
+
+`BaseLayout.astro` owns the document `<head>`, metadata, skip link, header, navigation, footer, global CSS, and browser script. Every public page should use it.
+
+`ProjectLayout.astro`, `ExperienceLayout.astro`, and `PostLayout.astro` wrap rendered Markdown. `ProjectCard.astro` renders the same project metadata on the home page and project archive. `ExperienceCard.astro` renders the native expandable cards used by both experience grids. `ProjectVisual.astro` owns the three lightweight fallback illustrations.
+
+Experience cards use `<details>` and `<summary>`, so click, keyboard activation, and expanded-state semantics work without custom JavaScript. `detailPage: true` creates a dedicated experience route; `detailPath` instead points the card at an existing related page such as a project case study.
+
+Astro escapes expressions by default. Markdown content is rendered by Astro's content pipeline rather than inserted as arbitrary HTML.
+
+## GitHub Pages base paths
+
+A GitHub user site runs at `/`; a project repository usually runs at `/portfolio/`. `astro.config.mjs` reads `ASTRO_BASE`, and `lib/urls.ts` exposes `withBase()` for internal component links and public assets.
+
+Rules:
+
+- Use `withBase("/projects/")` inside `.astro` files.
+- Use relative URLs inside Markdown bodies.
+- Use complete `https://` URLs for external sites.
+- Never add a `<base>` element or hardcode `/portfolio/`.
+
+Always test both URL shapes:
+
+```sh
+cd site
+npm run check
+ASTRO_BASE=/portfolio-check npm run check
+```
+
+## Styling patterns
+
+`site.css` is intentionally global. Existing class names form the design system, so preserving them is safer than adding component-scoped styles during ordinary edits.
+
+- CSS custom properties at the top control colors, type, spacing, and radii.
+- `.page-shell` controls maximum width and page gutters.
+- Repeated sections use `.section-heading`, `.eyebrow`, `.text-link`, `.tag-list`, and `.page-cta`.
+- Breakpoints are concentrated at 960, 760, 640, and 410 pixels, with one wide-screen rule at 1000 pixels.
+- Reduced-motion and print rules live near the end of the file.
+
+When changing layout, inspect desktop, 390px mobile, keyboard focus, and print. Check `document.documentElement.scrollWidth` against `clientWidth` if horizontal overflow appears.
+
+## Browser JavaScript
+
+The browser script progressively enhances two independent filters:
+
+- The project archive keeps its single-select category buttons.
+- The homepage adds Role, Skills, and Experience checkbox popovers across projects, experience, and writing.
+
+Homepage items carry one JSON `data-portfolio-tags` attribute based on their `filterTags` object. Matching is OR within a group and AND across groups. The toolbar and empty states are hidden in the server HTML; JavaScript reveals the toolbar only after it finds every required control. If JavaScript fails, all content stays visible.
+
+Keep homepage selectors prefixed with `data-portfolio-filter-`. The project archive intentionally uses older generic `data-filter` hooks, and sharing hooks would make the two behaviors interfere.
+
+Avoid replacing this with a framework island unless the interaction becomes substantially more complex.
+
+The experience expand/collapse interaction is native HTML and deliberately has no JavaScript controller. Filtering hides the outer `<details>` element, so it remains compatible with the homepage filter.
+
+The résumé page is also progressively enhanced. Server-rendered anchors and version panels provide direct PDF and editable LaTeX-recreation actions. `site.js` adds tab behavior, roving keyboard focus, Left/Right/Home/End navigation, URL-fragment selection, and lazy loading for inactive PDF previews. Without JavaScript, the `<noscript>` rule reveals every version and the download links remain usable.
+
+Résumé version metadata lives in `site/src/data/resumes.json`; `site.json` deliberately has no résumé fields. Every internal asset URL passes through `withBase()` for GitHub Pages project paths. Add behavior with `data-resume-` hooks so styling classes remain free to change.
+
+## Common customizations
+
+### Change shared profile information
+
+Edit `site/src/data/site.json`. Use exactly one primary `email`; place additional addresses in `alternateEmails`.
+
+### Add a résumé version
+
+Copy the PDF and optional editable `.tex` recreation to `site/public/assets/resume/`, then add one entry to `site/src/data/resumes.json`. Published entries require an existing PDF, unique ID, review month, and notice. Set `draft: true` while preparing a version. The PDF is the published visual reference; the build intentionally does not compile LaTeX or assert that the `.tex` recreation reproduces it exactly.
+
+### Add a new page
+
+Create `site/src/pages/example.astro`, wrap the content in `BaseLayout`, and use exactly one `<h1>`. Add navigation only if the page belongs in the primary visitor journey.
+
+### Change navigation
+
+Edit the `links` array and footer navigation in `BaseLayout.astro`. If you remove a core page, also update the expected-page list in `scripts/check-site.mjs`.
+
+### Add a project field
+
+1. Add the field to `site/src/content.config.ts`.
+2. Add it to `templates/project.md`.
+3. Render it in `ProjectCard.astro`, `ProjectLayout.astro`, or both.
+4. Update the Python validator only when the field needs a cross-file rule.
+5. Document it in `docs/content-guide.md`.
+
+### Replace the visual theme
+
+Start with custom properties and typography in `site.css`. Then adjust reusable section/card classes. Avoid rewriting page markup and CSS simultaneously; keeping one side stable makes regressions easier to isolate.
+
+## Debugging guide
+
+### Astro reports invalid content
+
+Read the file and field in the error. The accepted types are defined in `site/src/content.config.ts`. Common causes are a quoted boolean, malformed YAML list, missing required field, or invalid `chart` value.
+
+### A page is missing
+
+Check `draft`, filename/slug, and `getStaticPaths()` in the relevant `[slug].astro`. Run a normal build to replace generated output.
+
+### Links work locally but fail on GitHub
+
+Run the prefixed check. In Astro components, replace root-relative paths with `withBase()`. In Markdown, replace them with correct relative links.
+
+### Styling changed unexpectedly
+
+Inspect the rendered class names first. Astro markup must retain the classes expected by `site.css`. Then check the nearest responsive rule and CSS custom-property value.
+
+### Project filters do not appear
+
+The controls deliberately begin with `hidden`. Check the browser console and `site/src/scripts/site.js`.
+
+- Homepage: confirm `data-portfolio-filter`, three triggers/panels, `data-portfolio-filter-item`, and valid JSON in `data-portfolio-tags`.
+- Project archive: confirm `data-project-list`, `data-filter-controls`, `data-project`, and matching `data-category`/`data-filter` values.
+
+If an item never matches, inspect its `filterTags` in source and make sure all three arrays are present. Astro validates experience, project, and article frontmatter; Python checks required top-level fields, slugs, ordering, and whether a `detailPage: true` experience has a Markdown body.
+
+### An experience page is missing
+
+Confirm the entry is in `site/src/content/experiences/`, has `draft: false`, and sets `detailPage: true`. Card-only entries intentionally generate no route. If the card should link to a project instead, keep `detailPage: false` and use a valid root-relative `detailPath`.
+
+### CI fails but local checks pass
+
+Reproduce the exact commands in `.github/workflows/check.yml`, verify committed lockfiles, and confirm generated or local-only files were not referenced. CI uses Python 3.12 and Node 24.
+
+## Dependency and deployment rules
+
+- Pin site dependencies in `site/package.json` and commit `site/package-lock.json`.
+- Pin Python dependencies through `pyproject.toml` and commit `uv.lock`.
+- Pull requests test Python plus root and prefixed Astro builds.
+- Pushes to `main` deploy only after validation and generated-site checks pass.
+- The deploy artifact is `site/dist/`; source and dependencies are never served.

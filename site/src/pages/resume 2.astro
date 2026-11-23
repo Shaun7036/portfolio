@@ -1,0 +1,107 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../lib/urls";
+import resumes from "../data/resumes.json";
+
+const versions = resumes.versions.filter((version) => !version.draft);
+const defaultId = versions.some((version) => version.id === resumes.default)
+  ? resumes.default
+  : versions[0]?.id;
+
+const readableMonth = (value: string) => {
+  const [year, month] = value.split("-").map(Number);
+  return new Intl.DateTimeFormat("en-US", { month: "short", year: "numeric", timeZone: "UTC" })
+    .format(new Date(Date.UTC(year, month - 1, 1)));
+};
+---
+
+<BaseLayout title="Résumé" description="Choose a targeted résumé, preview it in the browser, or download the PDF and an editable LaTeX recreation.">
+  <div class="page-shell resume-page-shell">
+    <header class="page-intro resume-page-intro">
+      <p class="eyebrow">Choose the version that fits</p>
+      <h1>Experience, your way.</h1>
+      <p class="lede">Sports analytics, software and data engineering, or the broader history—each version is available to view and download.</p>
+    </header>
+
+    <section class="resume-switcher" data-resume-tabs data-resume-default={defaultId} aria-label="Résumé versions">
+      <nav class="resume-tabs" role="tablist" aria-label="Choose a résumé version">
+        {versions.map((version) => {
+          const active = version.id === defaultId;
+          return (
+            <a
+              id={`resume-tab-${version.id}`}
+              class="resume-tab"
+              href={`#resume-${version.id}`}
+              role="tab"
+              aria-controls={`resume-${version.id}`}
+              aria-selected={active}
+              tabindex={active ? 0 : -1}
+            >
+              <span>{version.label}</span>
+              <small>{version.status}</small>
+            </a>
+          );
+        })}
+      </nav>
+
+      <div class="resume-version-stack">
+        {versions.map((version) => {
+          const active = version.id === defaultId;
+          const pdfUrl = withBase(version.pdf);
+          const texUrl = version.tex ? withBase(version.tex) : "";
+          return (
+            <article
+              id={`resume-${version.id}`}
+              class="resume-version-panel"
+              role="tabpanel"
+              aria-labelledby={`resume-tab-${version.id}`}
+              tabindex="0"
+              hidden={!active}
+              data-resume-panel
+            >
+              <header class="resume-version-header">
+                <div>
+                  <div class="resume-version-meta">
+                    <span class="resume-status">{version.status}</span>
+                    <span>Reviewed {readableMonth(version.updated)}</span>
+                  </div>
+                  <h2>{version.title}</h2>
+                  <p>{version.description}</p>
+                </div>
+                <div class="resume-version-actions" aria-label={`${version.label} résumé files`}>
+                  <a class="button" href={pdfUrl} target="_blank" rel="noopener noreferrer">Open PDF <span aria-hidden="true">↗</span></a>
+                  <a class="button button-secondary" href={pdfUrl} download>Download PDF <span aria-hidden="true">↓</span></a>
+                  {texUrl && <a class="button button-secondary" href={texUrl} target="_blank" rel="noopener noreferrer" aria-label={`View ${version.label} editable LaTeX recreation`}>Editable LaTeX <span aria-hidden="true">↗</span></a>}
+                  {texUrl && <a class="button button-secondary" href={texUrl} download aria-label={`Download ${version.label} editable LaTeX recreation`}>Download .tex <span aria-hidden="true">↓</span></a>}
+                </div>
+              </header>
+
+              <p class:list={["resume-version-notice", version.status === "Older edition" && "is-archive"]}>
+                {version.notice}
+              </p>
+              {texUrl && <p class="resume-source-note">The published PDF and editable LaTeX recreation are maintained separately; use the PDF as the visual reference.</p>}
+
+              <div class="resume-file-frame" data-resume-frame>
+                <iframe
+                  title={`${version.title} PDF preview`}
+                  src={active ? pdfUrl : undefined}
+                  data-resume-pdf-src={pdfUrl}
+                  loading="lazy"
+                ></iframe>
+                <p>If the preview does not load, <a class="text-link" href={pdfUrl} target="_blank" rel="noopener noreferrer">open the document directly <span aria-hidden="true">↗</span></a>.</p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </section>
+
+    <noscript>
+      <style>
+        .resume-tabs { display: none !important; }
+        .resume-version-panel[hidden] { display: block !important; }
+        .resume-file-frame { display: none !important; }
+      </style>
+    </noscript>
+  </div>
+</BaseLayout>

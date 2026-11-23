@@ -1,0 +1,39 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { withBase } from "../../lib/urls";
+import { editorKinds } from "../../scripts/editor-model.js";
+import "../../styles/editor.css";
+---
+
+<BaseLayout title="Add an entry" description="Prepare a new portfolio project, experience entry, or article." noindex>
+  <div class="page-shell editor-shell">
+    <header class="page-intro">
+      <a class="back-link" href={withBase("/about/")}><span aria-hidden="true">←</span> About</a>
+      <p class="eyebrow">Content editor</p>
+      <h1>Add to the portfolio.</h1>
+      <p class="lede">Choose a template, fill in the details, and download a file ready for the repository.</p>
+    </header>
+    <section aria-labelledby="editor-templates-title">
+      <h2 id="editor-templates-title" class="section-label">What would you like to add?</h2>
+      <div class="editor-template-grid">
+        {Object.entries(editorKinds).map(([kind, item], index) => (
+          <a class="editor-template-card" href={withBase(`/editor/${kind}/`)}>
+            <span class="editor-template-number">0{index + 1}</span>
+            <h3>{item.label}<span aria-hidden="true"> ↗</span></h3>
+            <p>{item.description}</p>
+            <span class="text-link">Open template <span aria-hidden="true">→</span></span>
+          </a>
+        ))}
+      </div>
+    </section>
+    <section class="editor-how" aria-labelledby="editor-how-title">
+      <h2 id="editor-how-title">From draft to portfolio.</h2>
+      <ol>
+        <li><strong>Write and preview.</strong> Each template saves its draft in this browser on this device.</li>
+        <li><strong>Download the Markdown file.</strong> Place it in the repository folder shown by the editor.</li>
+        <li><strong>Review, then publish.</strong> Check the site locally, turn off draft status when ready, and commit and push the file.</li>
+      </ol>
+      <p class="editor-note">This editor does not publish or change the repository. Your entries stay in your browser until you copy or download them. The editor is public; its link is not a sign-in or an access restriction.</p>
+    </section>
+  </div>
+</BaseLayout>
